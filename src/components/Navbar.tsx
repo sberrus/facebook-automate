@@ -9,17 +9,25 @@ const MainNavbar = () => {
 	// hooks
 	const auth = UseAuth();
 
+	const handleSignOut = () => {
+		auth?.signOut();
+		console.log("first");
+	};
+
 	return (
 		<Navbar expand="lg" className={style.navbar}>
 			<Container>
-				<Navbar.Brand as={Link} to="#home">
+				<Navbar.Brand as={Link} to="/">
 					Facebook Automate
 				</Navbar.Brand>
-				{auth?.isLogged && (
+				{auth?.isLogged() && (
 					<>
 						<Nav className={style.nav}>
-							<Nav.Link as={Link} to="#link" className={style.link}>
+							<Nav.Link as={Link} to="/" className={style.link}>
 								<i className={`bi bi-person ${style.icon}`}></i>
+							</Nav.Link>
+							<Nav.Link as="button" className={style.logout} onClick={handleSignOut}>
+								<i className={`bi bi-box-arrow-right ${style.icon}`}></i>
 							</Nav.Link>
 						</Nav>
 					</>

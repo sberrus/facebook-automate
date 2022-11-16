@@ -2,8 +2,11 @@
 	border-bottom: 1px solid #1c1c1c2c;
 	.nav {
 		margin-left: auto;
+		display: flex;
+		flex-direction: row;
+		gap: 0.5em;
 		.link {
-			padding: 0.5em 1em;
+			padding: 0.25em 0.75em;
 			border-radius: 0.25rem;
 			&:hover {
 				background-color: #1c1c1c1a;
@@ -11,6 +14,18 @@
 			.icon {
 				font-size: 25px;
 				color: #1d1d1d;
+			}
+		}
+		.logout {
+			@extend .link;
+			background-color: transparent;
+			border: 1px solid transparent;
+			&:hover {
+				background-color: hsla(0, 100%, 50%, 0.15);
+			}
+			.icon {
+				@extend .icon;
+				color: red;
 			}
 		}
 	}

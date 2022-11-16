@@ -1,9 +1,10 @@
 // imports
-import { useState, createContext } from "react";
-import { User } from "firebase/auth";
+import { useState, createContext, useEffect } from "react";
+import { onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 // Login helpers
 import { firebaseSignIn, LoginProps } from "./AuthHelper";
+import { auth } from "../../app/firebase";
 
 // types
 type AuthProviderProps = {
@@ -13,6 +14,7 @@ type AuthProviderProps = {
 interface AuthContextType {
 	user: User | null;
 	login: ({ email, password }: LoginProps) => {};
+	signOut: () => void;
 	isLogged: () => boolean;
 }
 
@@ -22,22 +24,47 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 const AuthProvider = ({ children }: AuthProviderProps) => {
 	// hooks
 	const navigate = useNavigate();
-	const [user, setUser] = useState<User | null>(null);
+	// state
+	const [user, setUser] = useState<User | null>(() => {
+		return JSON.parse(localStorage.getItem("credentials")!);
+	});
+	// useEffect
+	useEffect(() => {
+		// check current session
+		onAuthStateChanged(auth, (user) => {
+			if (!!user) {
+				setUser(user);
+				localStorage.setItem("credentials", JSON.stringify(user));
+			} else {
+				setUser(null);
+			}
+		});
+		return () => {};
+	}, []);
 
+	// context properties
 	let contextValue: AuthContextType = {
 		user,
+
+		// login
 		async login({ email, password }) {
 			try {
-				const signInRes = await firebaseSignIn({ email, password });
-
-				// persist data
-				setUser(signInRes.user);
-				localStorage.setItem("credentials", JSON.stringify(signInRes.user));
-				navigate("/dashboard");
+				await firebaseSignIn({ email, password });
 			} catch (error) {
 				console.log(error);
 			}
 		},
+
+		// logout
+		async signOut() {
+			await signOut(auth);
+
+			// clear session data
+			localStorage.removeItem("credentials");
+			navigate("/");
+		},
+
+		// status
 		isLogged() {
 			return !!user;
 		},
