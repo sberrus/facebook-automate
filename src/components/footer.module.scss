@@ -1,0 +1,27 @@
+.footer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	height: 50px;
+	color: #fff;
+	overflow: hidden;
+	.copyrightLink {
+		position: absolute;
+		color: #1d1d1d;
+		font-weight: 500;
+		text-decoration: none;
+		transform: translateY(100%);
+		opacity: 0;
+		animation: showCopy 1s ease 1s forwards;
+	}
+}
+
+@keyframes showCopy {
+	to {
+		transform: translateY(0%);
+		opacity: 1;
+	}
+}
