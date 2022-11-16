@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import style from "./apptemplate.module.scss";
 
 const AppTemplate = () => {
+	// hooks
 	return (
 		<div className={style.appTemplate}>
 			<MainNavbar />
