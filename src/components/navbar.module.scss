@@ -1,0 +1,17 @@
+.navbar {
+	border-bottom: 1px solid #1c1c1c2c;
+	.nav {
+		margin-left: auto;
+		.link {
+			padding: 0.5em 1em;
+			border-radius: 0.25rem;
+			&:hover {
+				background-color: #1c1c1c1a;
+			}
+			.icon {
+				font-size: 25px;
+				color: #1d1d1d;
+			}
+		}
+	}
+}

@@ -1,16 +1,24 @@
+// imports
+import { Link } from "react-router-dom";
 import { Container, Nav, Navbar } from "react-bootstrap";
+// style
+import style from "./navbar.module.scss";
 
 const MainNavbar = () => {
 	return (
-		<Navbar bg="light" expand="lg">
+		<Navbar expand="lg" className={style.navbar}>
 			<Container>
-				<Navbar.Brand href="#home">Facebook Automate</Navbar.Brand>
-				<Navbar.Toggle aria-controls="basic-navbar-nav" />
+				<Navbar.Brand as={Link} to="#home">
+					Facebook Automate
+				</Navbar.Brand>
+				{/* <Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">
-					<Nav className="ms-auto">
-						<Nav.Link href="#link">Link</Nav.Link>
+					<Nav className={style.nav}>
+						<Nav.Link as={Link} to="#link" className={style.link}>
+							<i className={`bi bi-person ${style.icon}`}></i>
+						</Nav.Link>
 					</Nav>
-				</Navbar.Collapse>
+				</Navbar.Collapse> */}
 			</Container>
 		</Navbar>
 	);
