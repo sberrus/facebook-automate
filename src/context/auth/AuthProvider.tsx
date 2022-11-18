@@ -1,10 +1,9 @@
 // imports
 import { useState, createContext, useEffect } from "react";
-import { onAuthStateChanged, signOut, User } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 // Login helpers
 import { firebaseSignIn, LoginProps } from "./AuthHelper";
-import { auth } from "../../app/firebase";
 
 // types
 type AuthProviderProps = {
@@ -28,6 +27,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [user, setUser] = useState<User | null>(() => {
 		return JSON.parse(localStorage.getItem("credentials")!);
 	});
+	const [auth] = useState(() => getAuth());
 	// useEffect
 	useEffect(() => {
 		// check current session

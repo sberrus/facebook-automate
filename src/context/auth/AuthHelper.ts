@@ -1,5 +1,4 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../app/firebase";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export type LoginProps = {
 	email: string;
@@ -7,6 +6,7 @@ export type LoginProps = {
 };
 
 export const firebaseSignIn = async ({ email, password }: LoginProps) => {
+	const auth = getAuth();
 	try {
 		const signInRes = await signInWithEmailAndPassword(auth, email, password);
 		return signInRes;
