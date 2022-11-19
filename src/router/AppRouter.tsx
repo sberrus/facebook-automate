@@ -3,9 +3,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 // templates
 import AppTemplate from "../template/AppTemplate";
 // pages
-import Login from "../pages/index/Login";
 import Dashboard from "./../pages/dashboard/Dashboard";
 // public route
+import Login from "../pages/index/Login";
+// public and private routes controller
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 
