@@ -11,7 +11,6 @@ const MainNavbar = () => {
 
 	const handleSignOut = () => {
 		auth?.signOut();
-		console.log("first");
 	};
 
 	return (

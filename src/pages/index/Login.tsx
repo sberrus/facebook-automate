@@ -6,30 +6,30 @@ import UseAuth from "./../../context/auth/UseAuth";
 // styles
 import style from "./login.module.scss";
 import { useState } from "react";
-// types
-import { LoginProps } from "./../../context/auth/AuthHelper";
 
 //
 const Login = () => {
 	// context
 	const auth = UseAuth();
 	// states
-	const [formData, setFormData] = useState<LoginProps>({
-		email: "",
-		password: "",
-	});
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
-		auth?.login(formData);
+
+		auth?.login({
+			email,
+			password,
+		});
 	};
 
 	const handleEmail = (e: ChangeEvent<HTMLInputElement>) => {
-		setFormData({ ...formData, email: e.target.value });
+		setEmail(e.target.value);
 	};
 
 	const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
-		setFormData({ ...formData, password: e.target.value });
+		setPassword(e.target.value);
 	};
 	return (
 		<div className={style.login}>
