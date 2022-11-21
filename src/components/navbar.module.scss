@@ -6,14 +6,15 @@
 		flex-direction: row;
 		gap: 0.5em;
 		.link {
+			position: relative;
 			padding: 0.25em 0.75em;
 			border-radius: 0.25rem;
 			&:hover {
-				background-color: #1c1c1c1a;
+				background-color: rgb(255, 255, 255, 0.25);
 			}
 			.icon {
 				font-size: 25px;
-				color: #1d1d1d;
+				color: #fff;
 			}
 		}
 		.logout {
@@ -21,9 +22,11 @@
 			background-color: transparent;
 			border: 1px solid transparent;
 			&:hover {
-				background-color: hsla(0, 100%, 50%, 0.15);
+				background-color: hsla(0, 100%, 50%, 0.25);
 			}
 			.icon {
+				position: relative;
+				left: 2px;
 				@extend .icon;
 				color: red;
 			}

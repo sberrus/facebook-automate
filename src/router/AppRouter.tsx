@@ -2,13 +2,14 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 // templates
 import AppTemplate from "../template/AppTemplate";
-// pages
-import Dashboard from "./../pages/dashboard/Dashboard";
-// public route
-import Login from "../pages/index/Login";
 // public and private routes controller
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
+// public
+import Login from "../pages/index/Login";
+// private
+import Dashboard from "./../pages/dashboard/Dashboard";
+import Account from "../pages/account/Account";
 
 const router = () => {
 	return (
@@ -23,6 +24,7 @@ const router = () => {
 				{/* private routes */}
 				<Route path="app" element={<PrivateRoute />}>
 					<Route path="dashboard" element={<Dashboard />} />
+					<Route path="account" element={<Account />} />
 				</Route>
 
 				{/* 404 fallback */}

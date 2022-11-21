@@ -14,7 +14,7 @@ const MainNavbar = () => {
 	};
 
 	return (
-		<Navbar expand="lg" className={style.navbar}>
+		<Navbar variant="dark" bg="dark" expand="lg" className={style.navbar}>
 			<Container>
 				<Navbar.Brand as={Link} to="/">
 					Facebook Automate
@@ -22,7 +22,7 @@ const MainNavbar = () => {
 				{auth?.isLogged() && (
 					<>
 						<Nav className={style.nav}>
-							<Nav.Link as={Link} to="/" className={style.link}>
+							<Nav.Link as={Link} to="/app/account" className={style.link}>
 								<i className={`bi bi-person ${style.icon}`}></i>
 							</Nav.Link>
 							<Nav.Link as="button" className={style.logout} onClick={handleSignOut}>
