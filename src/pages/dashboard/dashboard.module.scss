@@ -1,0 +1,61 @@
+@import "../../style/variables";
+
+.dashboard {
+	padding-top: 0.5em;
+	.newPostButton {
+		padding: 0.5em 1.5em;
+		background-color: $dark;
+		color: $primary;
+		font-size: 1.15em;
+		font-weight: 500;
+
+		&:hover {
+			background-color: $primary;
+			color: $light;
+		}
+	}
+
+	.postsContainer {
+		.post {
+			display: flex;
+			align-items: center;
+			.postLink {
+				&:first-child {
+					margin-top: 0.75em;
+				}
+				display: block;
+				display: flex;
+				align-items: center;
+				margin: 0.5em 0;
+				padding: 0.5em;
+				width: 450px;
+				background-color: $grey;
+				border-radius: 0.5rem;
+				text-decoration: none;
+				color: $dark;
+				font-weight: 500;
+				.scheduleDay {
+					display: inline-block;
+					padding: 0.5em;
+					margin-left: auto;
+					background-color: $primary;
+					color: $light;
+					font-weight: 400;
+					font-size: 0.75em;
+					border-radius: 0.5rem;
+				}
+			}
+			.controllers {
+				margin-left: 1em;
+				display: flex;
+				.control {
+					display: flex;
+					align-items: center;
+					margin: 0 5px;
+					font-size: 1.75em;
+					color: $dark;
+				}
+			}
+		}
+	}
+}
