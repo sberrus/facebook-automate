@@ -6,10 +6,11 @@ import AppTemplate from "../template/AppTemplate";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 // public
-import Login from "../pages/index/Login";
+import Login from "../pages/login/Login";
 // private
 import Dashboard from "./../pages/dashboard/Dashboard";
 import Account from "../pages/account/Account";
+import Jobs from "../pages/jobs/Jobs";
 
 const router = () => {
 	return (
@@ -25,6 +26,9 @@ const router = () => {
 				<Route path="app" element={<PrivateRoute />}>
 					<Route path="dashboard" element={<Dashboard />} />
 					<Route path="account" element={<Account />} />
+					<Route path="jobs">
+						<Route path=":id" element={<Jobs />} />
+					</Route>
 				</Route>
 
 				{/* 404 fallback */}

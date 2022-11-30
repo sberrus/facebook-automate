@@ -2,7 +2,7 @@
 import { FormEvent, ChangeEvent } from "react";
 import { Form, Button, Container } from "react-bootstrap";
 // context
-import UseAuth from "./../../context/auth/UseAuth";
+import UseAuth from "../../context/auth/UseAuth";
 // styles
 import style from "./login.module.scss";
 import { useState } from "react";
@@ -25,11 +25,11 @@ const Login = () => {
 	};
 
 	const handleEmail = (e: ChangeEvent<HTMLInputElement>) => {
-		setEmail(e.target.value);
+		setEmail(e.target.value.trim());
 	};
 
 	const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
-		setPassword(e.target.value);
+		setPassword(e.target.value.trim());
 	};
 	return (
 		<div className={style.login}>
