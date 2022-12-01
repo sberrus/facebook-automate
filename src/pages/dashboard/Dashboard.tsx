@@ -9,21 +9,23 @@ const Dashboard = () => {
 	return (
 		<div className={style.dashboard}>
 			<Container>
-				<Button className={style.newPostButton}>NEW POST</Button>
+				<Link to="/app/jobs/new-job" className={style.newPostButton}>
+					NEW POST
+				</Link>
 				{/* posts container */}
 				<div className={style.postsContainer}>
 					{/* post template */}
 
 					<div className={style.post}>
 						{/* link */}
-						<Link to="/" className={style.postLink}>
+						<Link to="/app/jobs/123" className={style.postLink}>
 							WHEATLEY <span className={style.scheduleDay}>EVERY WEDNESDAY</span>
 						</Link>
 						{/* controls */}
 						<div className={style.controllers}>
-							<Button className={`${style.control}`}>
+							<Link to="/app/jobs/123" className={`${style.control}`}>
 								<i className="bi bi-pencil-square"></i>
-							</Button>
+							</Link>
 							<Dropdown drop="up">
 								<Dropdown.Toggle variant="success" id="items-menu" className={`${style.control}`}>
 									<i className="bi bi-eye-fill"></i>

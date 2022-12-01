@@ -3,11 +3,14 @@
 .dashboard {
 	padding-top: 0.5em;
 	.newPostButton {
+		display: inline-block;
 		padding: 0.5em 1.5em;
 		background-color: $dark;
 		color: $primary;
 		font-size: 1.15em;
 		font-weight: 500;
+		border-radius: 0.25rem;
+		text-decoration: none;
 
 		&:hover {
 			background-color: $primary;

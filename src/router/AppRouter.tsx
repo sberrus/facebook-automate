@@ -10,7 +10,7 @@ import Login from "../pages/login/Login";
 // private
 import Dashboard from "./../pages/dashboard/Dashboard";
 import Account from "../pages/account/Account";
-import Jobs from "../pages/jobs/Jobs";
+import NewJob from "../pages/jobs/NewJob";
 
 const router = () => {
 	return (
@@ -27,7 +27,8 @@ const router = () => {
 					<Route path="dashboard" element={<Dashboard />} />
 					<Route path="account" element={<Account />} />
 					<Route path="jobs">
-						<Route path=":id" element={<Jobs />} />
+						{/* <Route path=":id" element={<NewJob />} /> */}
+						<Route path="new-job" element={<NewJob />} />
 					</Route>
 				</Route>
 

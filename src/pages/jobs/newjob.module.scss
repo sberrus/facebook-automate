@@ -1,0 +1,181 @@
+@import "../../style/variables";
+
+.jobs {
+	position: relative;
+	height: 80vh;
+	width: 100%;
+	.layout {
+		display: flex;
+		height: 100%;
+		h3.sectionTitle {
+			color: $primary;
+		}
+		.facebookPostLayer {
+			width: 50%;
+			height: 100%;
+			padding: 1em;
+
+			section.title {
+				height: 20%;
+				.input {
+					padding: 0.5em;
+					border-radius: 0.5rem;
+					width: 100%;
+				}
+			}
+			section.text {
+				height: 40%;
+				.textInput {
+					position: relative;
+					height: 10em;
+					.textarea {
+						width: 100%;
+						height: 10em;
+						border: 2px solid $dark;
+						border-radius: 0.5rem;
+						resize: none;
+					}
+					.emojiPickerMenu {
+						position: absolute;
+						top: 0;
+						right: 0;
+					}
+					.emojisPickerButton {
+						position: absolute;
+						bottom: 5px;
+						right: 5px;
+						border: none;
+						font-size: 25px;
+						color: grey;
+						background-color: $light;
+					}
+				}
+			}
+			section.attachments {
+				height: 40%;
+				margin-top: 0.5em;
+			}
+		}
+		.scheduleLayer {
+			width: 50%;
+			height: 100%;
+			padding: 1em;
+			section.schedule {
+				height: 20%;
+				.badge {
+					user-select: none;
+					border: 1px soli $dark;
+					border-radius: 0.5rem;
+					padding: 5px;
+					background-color: $light;
+				}
+				.scheduleConfig {
+					.dayBadge {
+						@extend .badge;
+					}
+					.hourBadge {
+						@extend .badge;
+					}
+				}
+			}
+			section.sharing {
+				height: 80%;
+
+				.groupsList {
+					border: 1px solid $dark;
+					border-radius: 0.5rem;
+					padding: 0.5em;
+					height: 70%;
+					position: relative;
+					overflow: auto;
+					.group {
+						position: relative;
+						width: 100%;
+						padding: 0.5em 0;
+						display: flex;
+						.groupInfoContainer {
+							width: 70%;
+							display: flex;
+							align-items: center;
+							.imgContainer {
+								position: relative;
+								height: 3em;
+								width: 3em;
+								background-color: $grey;
+								border-radius: 0.5rem;
+								display: flex;
+								align-items: center;
+								justify-content: center;
+								overflow: hidden;
+								img {
+									height: 100%;
+								}
+							}
+
+							.groupInfo {
+								margin-left: 5px;
+								.groupTitle {
+									position: relative;
+									display: inline-block;
+									top: 3px;
+									font-size: 16px;
+									font-weight: 500;
+								}
+								.groupScope {
+									position: relative;
+									display: inline-block;
+									top: -5px;
+									font-size: 13px;
+									font-weight: 500;
+									color: $grey_dark;
+								}
+							}
+						}
+						.groupSchedule {
+							width: 40%;
+							.groupScheduleConfig {
+								display: flex;
+								flex-wrap: wrap;
+								.badge {
+									user-select: none;
+									border: 1px solid $dark;
+									border-radius: 0.25rem;
+									padding: 5px;
+									background-color: $light;
+								}
+								.dayBadge {
+									@extend .badge;
+								}
+								.hourBadge {
+									@extend .badge;
+									margin-left: 5px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	// send post
+	.bottomStripe {
+		width: 100%;
+		padding: 0.25em 0;
+		background-color: $grey;
+		.container {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			.text {
+				font-weight: 500;
+			}
+			.button {
+				padding: 0.25em 0.5em;
+				background-color: $primary;
+				color: $light;
+				border: 1px solid $light;
+				border-radius: 0.5rem;
+			}
+		}
+	}
+}

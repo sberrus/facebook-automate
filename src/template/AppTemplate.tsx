@@ -10,9 +10,7 @@ const AppTemplate = () => {
 	return (
 		<div className={style.appTemplate}>
 			<MainNavbar />
-			<main>
-				<Outlet />
-			</main>
+			<Outlet />
 			<Footer />
 		</div>
 	);
