@@ -15,15 +15,15 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 
+	// form login
 	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 
-		auth?.login({
+		auth?.loginWithEmail({
 			email,
 			password,
 		});
 	};
-
 	const handleEmail = (e: ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value.trim());
 	};
@@ -31,6 +31,8 @@ const Login = () => {
 	const handlePassword = (e: ChangeEvent<HTMLInputElement>) => {
 		setPassword(e.target.value.trim());
 	};
+
+	//
 	return (
 		<div className={style.login}>
 			<div className={style.formContainer}>

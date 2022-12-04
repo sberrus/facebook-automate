@@ -3,7 +3,7 @@ import { useState, createContext, useEffect } from "react";
 import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 // Login helpers
-import { firebaseSignIn, LoginProps } from "./AuthHelper";
+import { firebaseSignIn, firebaseSignInWithFacebook, LoginProps } from "./AuthHelper";
 
 // types
 type AuthProviderProps = {
@@ -12,7 +12,8 @@ type AuthProviderProps = {
 
 interface AuthContextType {
 	user: User | null;
-	login: ({ email, password }: LoginProps) => {};
+	loginWithEmail: ({ email, password }: LoginProps) => {};
+	loginWithFacebook: () => {};
 	signOut: () => void;
 	isLogged: () => boolean;
 }
@@ -23,12 +24,13 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 const AuthProvider = ({ children }: AuthProviderProps) => {
 	// hooks
 	const navigate = useNavigate();
+
 	// state
 	const [user, setUser] = useState<User | null>(() => {
 		return JSON.parse(localStorage.getItem("credentials")!);
 	});
 	const [auth] = useState(() => getAuth());
-	// useEffect
+
 	useEffect(() => {
 		// check current session
 		onAuthStateChanged(auth, (user) => {
@@ -47,9 +49,18 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 		user,
 
 		// login
-		async login({ email, password }) {
+		async loginWithEmail({ email, password }) {
 			try {
 				await firebaseSignIn({ email, password });
+			} catch (error) {
+				console.log(error);
+			}
+		},
+
+		// login with facebook provider
+		async loginWithFacebook() {
+			try {
+				await firebaseSignInWithFacebook();
 			} catch (error) {
 				console.log(error);
 			}

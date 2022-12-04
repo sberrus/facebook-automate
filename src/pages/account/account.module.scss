@@ -2,7 +2,7 @@
 
 .account {
 	padding-top: 0.5em;
-	.sessionData {
+	section.sessionData {
 		.sectionTitle {
 			display: inline-block;
 			margin-right: 0.5em;
@@ -11,10 +11,11 @@
 			font-weight: 500;
 		}
 	}
-	.actionsButtons {
+	section.actionsButtons {
 		margin-top: 0.5em;
 		.action {
 			padding: 0.25em 1em;
+			margin-right: 0.5em;
 			border-radius: 0.5rem;
 			border: none;
 			background-color: $primary;
@@ -24,7 +25,34 @@
 		}
 	}
 
-	.linkedAccounts {
+	section.tokenStatus {
+		margin: 2em 0;
+		.dotStatus {
+			display: inline-block;
+			height: 0.5rem;
+			width: 0.5rem;
+			border-radius: 50%;
+			margin-right: 5px;
+		}
+
+		.statusCorrect {
+			.dotStatus {
+				background-color: #04f52c;
+			}
+		}
+		.statusWarn {
+			.dotStatus {
+				background-color: #f5b504;
+			}
+		}
+		.statusDanger {
+			.dotStatus {
+				background-color: #f50404;
+			}
+		}
+	}
+
+	section.linkedAccounts {
 		margin-top: 2em;
 		width: fit-content;
 		max-width: 526px;
