@@ -1,10 +1,21 @@
-import { FacebookAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+	FacebookAuthProvider,
+	getAuth,
+	signInWithEmailAndPassword,
+	signInWithPopup,
+	UserCredential,
+} from "firebase/auth";
 
 export type LoginProps = {
 	email: string;
 	password: string;
 };
 
+export interface FacebookUserTypes extends UserCredential {
+	_tokenResponse: {
+		oauthAccessToken: string;
+	};
+}
 /**
  * Sign in with email and password
  * @param param0
@@ -27,8 +38,7 @@ export const firebaseSignInWithFacebook = async () => {
 	const auth = getAuth();
 	const provider = new FacebookAuthProvider();
 	try {
-		const authRes = await signInWithPopup(auth, provider);
-		console.log(authRes);
+		return await signInWithPopup(auth, provider);
 	} catch (error) {
 		console.log(error);
 	}

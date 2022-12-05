@@ -32,6 +32,11 @@ const Login = () => {
 		setPassword(e.target.value.trim());
 	};
 
+	// login with facebook
+	const handleFacebookLogin = () => {
+		auth?.loginWithFacebook();
+	};
+
 	//
 	return (
 		<div className={style.login}>
@@ -50,6 +55,8 @@ const Login = () => {
 						<Button variant="dark" type="submit">
 							Submit
 						</Button>
+						<hr />
+						<button onClick={handleFacebookLogin}>Login with facebook</button>
 					</Form>
 				</Container>
 			</div>

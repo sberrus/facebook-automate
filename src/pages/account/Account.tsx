@@ -8,7 +8,19 @@ import style from "./account.module.scss";
 const Account = () => {
 	// hooks
 	const auth = UseAuth();
-	//
+
+	//get token
+	const getLongLivedToken = async () => {
+		const fbOauthToken = localStorage.getItem("fb_oauth");
+		try {
+			const fbRes = await fetch(
+				`https://graph.facebook.com/v15.0/me?fields=id,name,email&access_token=${fbOauthToken}`
+			);
+			console.log(await fbRes.json());
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	/**
 	 *
@@ -23,54 +35,60 @@ const Account = () => {
 			<Container>
 				{/* current user data */}
 				<section className={style.sessionData}>
-					<h3 className={style.sectionTitle}>Account</h3>
-					<span className={style.currentSession}>{auth?.user?.email}</span>
+					<h4 className={style.sectionTitle}>
+						Facebook Managing Account:{" "}
+						<span className={style.currentSession}>{auth?.workspace?.facebook_admin}</span>
+					</h4>
+					<h4 className={style.sectionTitle}>
+						Current User: <span className={style.currentSession}>{auth?.user?.email}</span>
+					</h4>
 				</section>
-
 				{/* current user actions */}
 				<section className={style.actionsButtons}>
-					<button className={style.action}>Change password</button>
-					<button className={style.action}>Get/Renew Token</button>
+					{auth?.user?.providerData[0].providerId !== "facebook.com" && (
+						<button className={style.action}>Change password</button>
+					)}
+					<button className={style.action} onClick={getLongLivedToken}>
+						Get/Renew Token
+					</button>
 				</section>
-
 				{/* token status */}
 				<section className={style.tokenStatus}>
 					<h5>Token Status:</h5>
 					<p>
 						<span className={style.statusCorrect}>
-							<div className={style.dotStatus}></div>
+							<span className={style.dotStatus}></span>
 							online
 						</span>
 					</p>
 
 					<p>
 						<span className={style.statusWarn}>
-							<div className={style.dotStatus}></div>
+							<span className={style.dotStatus}></span>
 							The token is close to expire, please renew
 						</span>
 					</p>
 
 					<p>
 						<span className={style.statusDanger}>
-							<div className={style.dotStatus}></div>
+							<span className={style.dotStatus}></span>
 							Token expired, please generate a new token
 						</span>
 					</p>
 
 					<p>
 						<span className={style.statusDanger}>
-							<div className={style.dotStatus}></div>
+							<span className={style.dotStatus}></span>
 							Error, talk to admin
 						</span>
 					</p>
 					<p>
 						<span className={style.statusDanger}>
-							<div className={style.dotStatus}></div>
+							<span className={style.dotStatus}></span>
 							No Long Lived Token. Generate a new token
 						</span>
 					</p>
 				</section>
-
 				{/* accounts linked to user */}
 				<section className={style.linkedAccounts}>
 					<div className={style.fbAccount}>
