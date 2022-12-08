@@ -1,26 +1,49 @@
+// imports
+import { useEffect, useState } from "react";
+import { Button, Container } from "react-bootstrap";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 // context
-import { Container } from "react-bootstrap";
 import UseAuth from "../../context/auth/UseAuth";
+// api
+import { generateLongLivedToken, getLongLivedTokenStatus } from "../../api/token/token.api";
 // styles
 import style from "./account.module.scss";
-
+// types
+type TokenStatusType = "ok" | "error" | "loading";
 //
 const Account = () => {
 	// hooks
 	const auth = UseAuth();
+	// states
+	const [tokenStatus, setTokenStatus] = useState<TokenStatusType>("loading");
 
-	//get token
-	const getLongLivedToken = async () => {
-		const fbOauthToken = localStorage.getItem("fb_oauth");
+	// methods
+	const handleTokenStatus = async () => {
 		try {
-			const fbRes = await fetch(
-				`https://graph.facebook.com/v15.0/me?fields=id,name,email&access_token=${fbOauthToken}`
-			);
-			console.log(await fbRes.json());
+			// get token status
+			const isValidToken = await getLongLivedTokenStatus();
+
+			if (!isValidToken) {
+				return setTokenStatus("error");
+			}
+
+			setTokenStatus("ok");
+		} catch (error) {}
+	};
+
+	const handleGenerateLongLivedToken = async (response: any) => {
+		const { accessToken } = response;
+		try {
+			await generateLongLivedToken(accessToken);
 		} catch (error) {
-			console.log(error);
+			console.log("🚀 ~ file: Account.tsx:38 ~ handleGenerateLongLivedToken ~ error", error);
 		}
 	};
+
+	useEffect(() => {
+		handleTokenStatus();
+		return () => {};
+	}, []);
 
 	/**
 	 *
@@ -36,58 +59,53 @@ const Account = () => {
 				{/* current user data */}
 				<section className={style.sessionData}>
 					<h4 className={style.sectionTitle}>
-						Facebook Managing Account:{" "}
-						<span className={style.currentSession}>{auth?.workspace?.facebook_admin}</span>
+						Facebook Managing Account: <span className={style.currentSession}>[managing_account]</span>
 					</h4>
 					<h4 className={style.sectionTitle}>
 						Current User: <span className={style.currentSession}>{auth?.user?.email}</span>
 					</h4>
 				</section>
-				{/* current user actions */}
-				<section className={style.actionsButtons}>
-					{auth?.user?.providerData[0].providerId !== "facebook.com" && (
-						<button className={style.action}>Change password</button>
-					)}
-					<button className={style.action} onClick={getLongLivedToken}>
-						Get/Renew Token
-					</button>
-				</section>
+
 				{/* token status */}
 				<section className={style.tokenStatus}>
 					<h5>Token Status:</h5>
-					<p>
-						<span className={style.statusCorrect}>
-							<span className={style.dotStatus}></span>
-							online
-						</span>
-					</p>
+					<div className={style.statusContainer}>
+						{tokenStatus === "ok" && (
+							<span className={style.statusCorrect}>
+								<span className={style.dotStatus}></span>
+								online
+							</span>
+						)}
 
-					<p>
-						<span className={style.statusWarn}>
-							<span className={style.dotStatus}></span>
-							The token is close to expire, please renew
-						</span>
-					</p>
-
-					<p>
-						<span className={style.statusDanger}>
-							<span className={style.dotStatus}></span>
-							Token expired, please generate a new token
-						</span>
-					</p>
-
-					<p>
-						<span className={style.statusDanger}>
-							<span className={style.dotStatus}></span>
-							Error, talk to admin
-						</span>
-					</p>
-					<p>
-						<span className={style.statusDanger}>
-							<span className={style.dotStatus}></span>
-							No Long Lived Token. Generate a new token
-						</span>
-					</p>
+						{tokenStatus === "error" && (
+							<span className={style.statusDanger}>
+								<span className={style.dotStatus}></span>
+								Token error, please generate a new token
+							</span>
+						)}
+						{tokenStatus === "loading" && (
+							<span className={style.statusLoading}>
+								<span className={style.spinner}></span>
+							</span>
+						)}
+					</div>
+				</section>
+				{/* current user actions */}
+				<section className={style.actionsButtons}>
+					{auth?.user?.providerData[0].providerId === "facebook.com" && (
+						<>
+							<FacebookLogin
+								appId="929198114717885"
+								callback={handleGenerateLongLivedToken}
+								fields="email"
+								render={(renderProps) => (
+									<Button className={style.action} onClick={renderProps.onClick}>
+										Generate new token
+									</Button>
+								)}
+							/>
+						</>
+					)}
 				</section>
 				{/* accounts linked to user */}
 				<section className={style.linkedAccounts}>

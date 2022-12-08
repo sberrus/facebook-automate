@@ -12,7 +12,6 @@ type AuthProviderProps = {
 };
 
 interface AuthContextType {
-	workspace: WorkspaceType | null;
 	user: User | null;
 	loginWithEmail: ({ email, password }: LoginProps) => {};
 	loginWithFacebook: () => {};
@@ -33,18 +32,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 		return JSON.parse(localStorage.getItem("credentials")!);
 	});
 
-	const [workspace, setWorkspace] = useState(() => {
-		return JSON.parse(localStorage.getItem("workspace")!);
-	});
-
-	// methods
-	const manageWorkspace = async (email: string) => {
-		const workspace = await getWorkspace(email);
-
-		localStorage.setItem("workspace", JSON.stringify(workspace));
-		setWorkspace(workspace);
-	};
-
 	useEffect(() => {
 		// check current session
 		onAuthStateChanged(auth, (user) => {
@@ -52,7 +39,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 				setUser(user);
 				localStorage.setItem("credentials", JSON.stringify(user));
 				// get Workspace
-				manageWorkspace(user.email!);
 			} else {
 				setUser(null);
 			}
@@ -64,7 +50,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	// context properties
 	let contextValue: AuthContextType = {
 		user,
-		workspace,
 
 		// login
 		async loginWithEmail({ email, password }) {

@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
+// components
+import ImagePicker from "./components/imagepicker/ImagePicker";
 // style
 import style from "./newjob.module.scss";
 
@@ -55,16 +57,22 @@ const NewJob = () => {
 						{/* attachments section*/}
 						<section className={style.attachments}>
 							<div className={style.attachment}>
-								<i className="bi bi-images"></i>photo/video
+								{/* Image Picker */}
+								<ImagePicker />
 							</div>
 							<div className={style.attachment}>
-								<i className="bi bi-emoji-laughing"></i>emotion
+								<Button className={style.inputButtons}>
+									<i className="bi bi-emoji-laughing"></i>emotion
+								</Button>
 							</div>
 							<div className={style.attachment}>
-								<i className="bi bi-geo-alt-fill"></i>location
+								<Button className={style.inputButtons}>
+									<i className="bi bi-geo-alt-fill"></i>location
+								</Button>
 							</div>
 						</section>
 					</div>
+
 					{/* schedule layer */}
 					<div className={style.scheduleLayer}>
 						{/* schedule section */}

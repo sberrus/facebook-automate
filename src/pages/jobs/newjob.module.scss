@@ -54,6 +54,14 @@
 			section.attachments {
 				height: 40%;
 				margin-top: 0.5em;
+				.inputButtons {
+					margin: 0.25em 0;
+					background-color: $light;
+					border: 1px solid $grey;
+					color: $dark;
+					text-align: start;
+					min-width: 50%;
+				}
 			}
 		}
 		.scheduleLayer {

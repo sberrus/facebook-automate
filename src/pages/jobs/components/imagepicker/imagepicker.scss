@@ -1,0 +1,25 @@
+@import "../../../../style/variables";
+
+.imagepicker {
+	.body {
+		padding: 2em;
+		.menu {
+			display: flex;
+			justify-content: space-evenly;
+		}
+		.options_buttons {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			height: 7em;
+			width: 40%;
+			background-color: $light;
+			border: 1px solid $grey;
+			color: $dark;
+			.button-icon {
+				font-size: 1.5em;
+			}
+		}
+	}
+}
