@@ -4,7 +4,7 @@ import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 // Login helpers
 import { FacebookUserTypes, firebaseSignIn, firebaseSignInWithFacebook, LoginProps } from "../../helpers/AuthHelper";
-import { getWorkspace, WorkspaceType } from "../../helpers/WorkspaceHelper";
+import { getWorkspace, WorkspaceType } from "../../api/workspace/workspace.api";
 
 // types
 type AuthProviderProps = {
@@ -12,6 +12,7 @@ type AuthProviderProps = {
 };
 
 interface AuthContextType {
+	workspace: WorkspaceType | null;
 	user: User | null;
 	loginWithEmail: ({ email, password }: LoginProps) => {};
 	loginWithFacebook: () => {};
@@ -32,13 +33,22 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 		return JSON.parse(localStorage.getItem("credentials")!);
 	});
 
+	const [workspace, setWorkspace] = useState<WorkspaceType | null>(() => {
+		// workspace not found
+		return null;
+	});
+
 	useEffect(() => {
 		// check current session
-		onAuthStateChanged(auth, (user) => {
+		onAuthStateChanged(auth, async (user) => {
 			if (!!user) {
 				setUser(user);
 				localStorage.setItem("credentials", JSON.stringify(user));
-				// get Workspace
+				// get workspace
+				const workspaceRes = await getWorkspace();
+				if (workspaceRes) {
+					setWorkspace(workspaceRes);
+				}
 			} else {
 				setUser(null);
 			}
@@ -49,6 +59,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
 	// context properties
 	let contextValue: AuthContextType = {
+		workspace,
 		user,
 
 		// login

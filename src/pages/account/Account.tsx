@@ -47,6 +47,7 @@ const Account = () => {
 
 	useEffect(() => {
 		handleTokenStatus();
+
 		return () => {};
 	}, [handleTokenStatus]);
 
