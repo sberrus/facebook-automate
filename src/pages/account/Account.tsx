@@ -55,17 +55,16 @@ const Account = () => {
 			<Container>
 				{/* current user data */}
 				<section className={style.sessionData}>
-					<h4 className={style.sectionTitle}>
-						Facebook Managing Account: <span className={style.currentSession}>[managing_account]</span>
-					</h4>
-					<h4 className={style.sectionTitle}>
+					<h5 className={style.sectionTitle}>
 						Current User: <span className={style.currentSession}>{auth?.user?.email}</span>
-					</h4>
+					</h5>
+					<h5 className={style.sectionTitle}>
+						Facebook admin account: <span className={style.currentSession}>[managing_account]</span>
+					</h5>
 				</section>
-
 				{/* token status */}
 				<section className={style.tokenStatus}>
-					<h5>Token Status:</h5>
+					<h4>Token Status</h4>
 					<div className={style.statusContainer}>
 						{tokenStatus === "ok" && (
 							<span className={style.statusCorrect}>
@@ -113,6 +112,7 @@ const Account = () => {
 				</section>
 				{/* accounts linked to user */}
 				<section className={style.linkedAccounts}>
+					<h4>Pages Linked</h4>
 					<div className={style.fbAccount}>
 						<div className={style.logo}>
 							<img src="https://graph.facebook.com/facebook/picture" alt="faceboook logo" />
