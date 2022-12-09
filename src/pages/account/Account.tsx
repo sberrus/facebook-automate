@@ -9,7 +9,7 @@ import { generateLongLivedToken, getLongLivedTokenStatus } from "../../api/token
 // styles
 import style from "./account.module.scss";
 // types
-type TokenStatusType = "ok" | "error" | "loading";
+type TokenStatusType = "ok" | "error" | "loading" | "server-error";
 //
 const Account = () => {
 	// hooks
@@ -17,18 +17,23 @@ const Account = () => {
 	// states
 	const [tokenStatus, setTokenStatus] = useState<TokenStatusType>("loading");
 
-	// methods
 	const handleTokenStatus = async () => {
 		try {
 			// get token status
 			const isValidToken = await getLongLivedTokenStatus();
+			if (isValidToken) {
+				return setTokenStatus("ok");
+			}
 
 			if (!isValidToken) {
 				return setTokenStatus("error");
 			}
 
-			setTokenStatus("ok");
-		} catch (error) {}
+			setTokenStatus("server-error");
+		} catch (error) {
+			console.log(error);
+			setTokenStatus("server-error");
+		}
 	};
 
 	const handleGenerateLongLivedToken = async (response: any) => {
@@ -43,16 +48,8 @@ const Account = () => {
 	useEffect(() => {
 		handleTokenStatus();
 		return () => {};
-	}, []);
+	}, [handleTokenStatus]);
 
-	/**
-	 *
-	 * *******LEER******
-	 * VER DOCUMENTACION DE PARA REALIZAR LOGIN CON FACEBOOK
-	 * https://www.npmjs.com/package/react-facebook-login
-	 *
-	 *
-	 */
 	return (
 		<div className={style.account}>
 			<Container>
@@ -81,6 +78,13 @@ const Account = () => {
 							<span className={style.statusDanger}>
 								<span className={style.dotStatus}></span>
 								Token error, please generate a new token
+							</span>
+						)}
+
+						{tokenStatus === "server-error" && (
+							<span className={style.statusDanger}>
+								<span className={style.dotStatus}></span>
+								Server error, please try again later
 							</span>
 						)}
 						{tokenStatus === "loading" && (

@@ -5,7 +5,7 @@ import { config } from "../config";
  * Checks facebook admin Long Lived Token status
  */
 
-export const getLongLivedTokenStatus = async () => {
+export const getLongLivedTokenStatus = async (): Promise<boolean | undefined> => {
 	try {
 		// get firebase token
 		const firebaseAuthToken = await auth.currentUser?.getIdToken();
@@ -14,11 +14,17 @@ export const getLongLivedTokenStatus = async () => {
 			const res = await fetch(`${config.apiUrl}/api/token/token-status`, {
 				headers: { "x-auth-firebase": firebaseAuthToken },
 			});
+			// if not 200
+			if (res.status !== 200) {
+				return false;
+			}
+
+			// handle res
 			const tokenStatusResponse = await res.json();
 			return tokenStatusResponse.token_status;
 		}
 	} catch (error) {
-		throw error;
+		throw new Error("There was a server error, try again later");
 	}
 };
 
