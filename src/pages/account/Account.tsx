@@ -8,6 +8,7 @@ import UseAuth from "../../context/auth/UseAuth";
 import { generateLongLivedToken, getLongLivedTokenStatus } from "../../api/token/token.api";
 // styles
 import style from "./account.module.scss";
+import AddPageModal from "./components/AddPageModal";
 // types
 type TokenStatusType = "ok" | "error" | "loading" | "server-error";
 //
@@ -60,7 +61,8 @@ const Account = () => {
 						Current User: <span className={style.currentSession}>{auth?.user?.email}</span>
 					</h5>
 					<h5 className={style.sectionTitle}>
-						Facebook admin account: <span className={style.currentSession}>[managing_account]</span>
+						Facebook admin account:{" "}
+						<span className={style.currentSession}>{auth?.workspace?.facebook_admin}</span>
 					</h5>
 				</section>
 				{/* token status */}
@@ -127,9 +129,7 @@ const Account = () => {
 					</div>
 
 					<div className={style.addNewAccount}>
-						<button className={style.addNewAccountButton}>
-							<i className={`${style.icon} bi bi-plus`}></i>
-						</button>
+						<AddPageModal />
 					</div>
 				</section>
 			</Container>

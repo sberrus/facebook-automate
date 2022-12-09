@@ -115,6 +115,9 @@
 			display: flex;
 			justify-content: center;
 			.addNewAccountButton {
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				width: 2.5em;
 				height: 2.5em;
 				border: none;

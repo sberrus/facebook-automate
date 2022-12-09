@@ -1,0 +1,43 @@
+@import "../../../style/variables";
+
+.add-page-modal {
+	.body {
+		.fbAccountButton {
+			cursor: pointer;
+			position: relative;
+			background-color: $light;
+			color: $primary;
+			border: none;
+			border-radius: 0.5rem;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			padding: 0.5em;
+			.logo {
+				margin-right: 0.5em;
+				img {
+					border-radius: 50%;
+					height: 35px;
+				}
+			}
+			.fbAccountName {
+				font-weight: 500;
+				margin-right: 0.5em;
+			}
+			&:hover {
+				background-color: $primary;
+				color: $light;
+				opacity: 0.9;
+				.logo {
+					img {
+						outline: 2px solid $light;
+					}
+				}
+			}
+			.radio {
+				position: absolute;
+				right: 2em;
+			}
+		}
+	}
+}
