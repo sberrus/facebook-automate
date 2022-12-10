@@ -45,3 +45,10 @@ export type LoginProps = {
 	email: string;
 	password: string;
 };
+
+/** RESPONSES */
+
+export interface BasicServerResponseType {
+	ok: boolean;
+	msg: string;
+}

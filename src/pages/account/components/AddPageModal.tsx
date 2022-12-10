@@ -1,12 +1,12 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-import { getAdminPages } from "../../../api/facebook/facebook";
 import UseAuth from "../../../context/auth/UseAuth";
 // style
 import style from "../account.module.scss";
 import "./addpagemodal.scss";
 // types
 import { PageType } from "../../../types";
+import { addPageToWorkspace, getAdminPages } from "../../../api/workspace/workspace.api";
 
 const AddPageModal = () => {
 	// hooks
@@ -20,9 +20,17 @@ const AddPageModal = () => {
 	const handleShow = () => setShow(true);
 
 	//handlers
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		console.log(selectedOption);
+		try {
+			if (selectedOption) {
+				await addPageToWorkspace(selectedOption);
+				location.reload();
+			}
+		} catch (error) {
+			console.log("🚀 ~ file: AddPageModal.tsx:31 ~ handleSubmit ~ error", error);
+			alert("Page coudln't be added to workspace pages");
+		}
 	};
 
 	//
@@ -100,7 +108,7 @@ const AddPageModal = () => {
 								</>
 							) : (
 								// https://www.pluralsight.com/guides/how-to-use-radio-buttons-in-reactjs
-								<h5>No pages to add or all pages added{pages.length}</h5>
+								<h5>No pages to add!</h5>
 							)}
 						</form>
 					</section>
@@ -109,7 +117,7 @@ const AddPageModal = () => {
 					<Button variant="secondary" onClick={handleClose}>
 						Close
 					</Button>
-					<Button type="submit" form="addPage" variant="primary">
+					<Button type="submit" form="addPage" variant="primary" disabled={!selectedOption}>
 						Save Changes
 					</Button>
 				</Modal.Footer>

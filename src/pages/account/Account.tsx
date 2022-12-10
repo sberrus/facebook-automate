@@ -9,6 +9,8 @@ import { generateLongLivedToken, getLongLivedTokenStatus } from "../../api/token
 // styles
 import style from "./account.module.scss";
 import AddPageModal from "./components/AddPageModal";
+import { PageType } from "../../types";
+import { deletePage } from "../../api/workspace/workspace.api";
 // types
 type TokenStatusType = "ok" | "error" | "loading" | "server-error";
 //
@@ -18,6 +20,9 @@ const Account = () => {
 	// states
 	const [tokenStatus, setTokenStatus] = useState<TokenStatusType>("loading");
 
+	/**
+	 * handle if the token is valid
+	 */
 	const handleTokenStatus = async () => {
 		try {
 			// get token status
@@ -37,12 +42,32 @@ const Account = () => {
 		}
 	};
 
+	/**
+	 * Generate new long lived token
+	 */
 	const handleGenerateLongLivedToken = async (response: any) => {
 		const { accessToken } = response;
 		try {
 			await generateLongLivedToken(accessToken);
 		} catch (error) {
 			console.log("🚀 ~ file: Account.tsx:38 ~ handleGenerateLongLivedToken ~ error", error);
+		}
+	};
+
+	/**
+	 * Delete the page from workspace page
+	 * @param pageID facebook page id
+	 */
+	const handleDeletePage = async (page: PageType) => {
+		const res = confirm(`are you sure you want to delete page ${page.name}?`);
+
+		if (res) {
+			try {
+				await deletePage(page.id);
+				window.location.reload();
+			} catch (error) {
+				console.log("🚀 ~ file: Account.tsx:60 ~ handleDeletePage ~ error", error);
+			}
 		}
 	};
 
@@ -116,17 +141,35 @@ const Account = () => {
 				{/* accounts linked to user */}
 				<section className={style.linkedAccounts}>
 					<h4>Pages Linked</h4>
-					<div className={style.fbAccount}>
-						<div className={style.logo}>
-							<img src="https://graph.facebook.com/facebook/picture" alt="faceboook logo" />
-						</div>
-						<div className={style.fbAccountName}>Howe & Co 22 - [placeholder]</div>
-						<div className={style.accountActionsButtons}>
-							<button className={style.fbAccountUnlink}>
-								<i className={`${style.icon} bi bi-trash3`}></i>
-							</button>
-						</div>
-					</div>
+
+					{auth?.workspace?.linked_pages && (
+						<>
+							{auth?.workspace?.linked_pages.length > 0 ? (
+								<>
+									{auth?.workspace?.linked_pages.map((page) => (
+										<div className={style.fbAccount} key={page.id}>
+											<div className={style.logo}>
+												<img src={page.picture.data.url} alt={`${page.name} picture`} />
+											</div>
+											<div className={style.fbAccountName}>{page.name}</div>
+											<div className={style.accountActionsButtons}>
+												<button
+													className={style.fbAccountUnlink}
+													onClick={() => {
+														handleDeletePage(page);
+													}}
+												>
+													<i className={`${style.icon} bi bi-trash3`}></i>
+												</button>
+											</div>
+										</div>
+									))}
+								</>
+							) : (
+								<p>No pages added! Please add a new page</p>
+							)}
+						</>
+					)}
 
 					<div className={style.addNewAccount}>
 						<AddPageModal />
