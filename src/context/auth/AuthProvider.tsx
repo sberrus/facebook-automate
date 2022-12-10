@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { firebaseSignIn, firebaseSignInWithFacebook } from "../../helpers/AuthHelper";
 import { getWorkspace } from "../../api/workspace/workspace.api";
 // types
-import { FacebookUserTypes, LoginProps, WorkspaceType } from "../../types";
+import { LoginProps, WorkspaceType } from "../../types";
 type AuthProviderProps = {
 	children: JSX.Element;
 };
