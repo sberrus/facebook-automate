@@ -3,10 +3,10 @@ import { useState, createContext, useEffect } from "react";
 import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 // Login helpers
-import { FacebookUserTypes, firebaseSignIn, firebaseSignInWithFacebook, LoginProps } from "../../helpers/AuthHelper";
-import { getWorkspace, WorkspaceType } from "../../api/workspace/workspace.api";
-
+import { firebaseSignIn, firebaseSignInWithFacebook } from "../../helpers/AuthHelper";
+import { getWorkspace } from "../../api/workspace/workspace.api";
 // types
+import { FacebookUserTypes, LoginProps, WorkspaceType } from "../../types";
 type AuthProviderProps = {
 	children: JSX.Element;
 };
@@ -74,8 +74,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 		// login with facebook provider
 		async loginWithFacebook() {
 			try {
-				const fbAuthRes = (await firebaseSignInWithFacebook()) as FacebookUserTypes;
-				localStorage.setItem("fb_oauth", fbAuthRes._tokenResponse.oauthAccessToken);
+				await firebaseSignInWithFacebook();
 			} catch (error) {
 				console.log(error);
 			}

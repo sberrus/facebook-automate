@@ -1,21 +1,7 @@
-import {
-	FacebookAuthProvider,
-	getAuth,
-	signInWithEmailAndPassword,
-	signInWithPopup,
-	UserCredential,
-} from "firebase/auth";
+import { FacebookAuthProvider, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+// types
+import { LoginProps } from "../types";
 
-export type LoginProps = {
-	email: string;
-	password: string;
-};
-
-export interface FacebookUserTypes extends UserCredential {
-	_tokenResponse: {
-		oauthAccessToken: string;
-	};
-}
 /**
  * Sign in with email and password
  * @param param0

@@ -1,37 +1,55 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { getAdminPages } from "../../../api/facebook/facebook";
+import UseAuth from "../../../context/auth/UseAuth";
 // style
 import style from "../account.module.scss";
 import "./addpagemodal.scss";
 // types
+import { PageType } from "../../../types";
 
-interface PageType {
-	id: string;
-	name: string;
-	picture: {
-		data: {
-			height: number;
-			width: number;
-			is_silhouette: boolean;
-			url: string;
-		};
-	};
-}
 const AddPageModal = () => {
+	// hooks
+	const auth = UseAuth();
 	// states
 	const [show, setShow] = useState(false);
 	const [pages, setPages] = useState<PageType[]>([]);
+	const [selectedOption, setSelectedOption] = useState<string | null>();
 	// methods
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
+	//handlers
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		console.log(selectedOption);
+	};
+
+	//
+	const handleRadiobuttonSelection = (e: ChangeEvent<HTMLInputElement>) => {
+		setSelectedOption(e.target.value);
+	};
+
 	//
 	const handleAdminPages = async () => {
 		try {
+			// get admin pages
 			const pages = await getAdminPages();
-			setPages(pages.pages);
-		} catch (error) {}
+			const linkedPages = auth?.workspace?.linked_pages;
+			let adminPagesIds;
+			let workspacePagesIds;
+			// get admin page ids and workspace pages ids
+			if (pages) {
+				adminPagesIds = pages?.map(() => {});
+			}
+			if (linkedPages) {
+				workspacePagesIds = linkedPages.map((page) => {
+					return page.id;
+				});
+			}
+		} catch (error) {
+			console.log("🚀 ~ file: AddPageModal.tsx:50 ~ handleAdminPages ~ error", error);
+		}
 	};
 	//
 	useEffect(() => {
@@ -53,13 +71,7 @@ const AddPageModal = () => {
 				</Modal.Header>
 				<Modal.Body className="body">
 					<section className="linkedAccounts">
-						<form
-							id="addPage"
-							onSubmit={(e) => {
-								e.preventDefault();
-								console.log(e.target);
-							}}
-						>
+						<form id="addPage" onSubmit={handleSubmit}>
 							{pages.length > 0 ? (
 								<>
 									{pages.map((page) => (
@@ -72,13 +84,20 @@ const AddPageModal = () => {
 												/>
 											</div>
 											<div className="fbAccountName">{page.name}</div>
-											<input type="radio" id={page.id} className={"radio"} value={page.id} />
+											<input
+												type="radio"
+												id={page.id}
+												className={"radio"}
+												checked={selectedOption === page.id}
+												onChange={handleRadiobuttonSelection}
+												value={page.id}
+											/>
 										</label>
 									))}
 								</>
 							) : (
 								// https://www.pluralsight.com/guides/how-to-use-radio-buttons-in-reactjs
-								<h5>Getting pages...{pages.length}</h5>
+								<h5>No pages to add or all pages added{pages.length}</h5>
 							)}
 						</form>
 					</section>
@@ -87,7 +106,7 @@ const AddPageModal = () => {
 					<Button variant="secondary" onClick={handleClose}>
 						Close
 					</Button>
-					<Button type="submit" form="addPage" variant="primary" onClick={handleClose}>
+					<Button type="submit" form="addPage" variant="primary">
 						Save Changes
 					</Button>
 				</Modal.Footer>

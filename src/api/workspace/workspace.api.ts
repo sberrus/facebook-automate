@@ -1,13 +1,7 @@
 import { auth } from "../../app/firebase";
+import { WorkspaceType } from "../../types";
 import { config } from "../config";
 
-// type
-export interface WorkspaceType {
-	facebook_admin: string;
-	groups: string[];
-	linked_pages: string[];
-	managers: string[];
-}
 /**
  * Get the user workspace or null if not found
  */

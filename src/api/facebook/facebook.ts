@@ -1,6 +1,11 @@
 import { auth } from "../../app/firebase";
+import { PageResType } from "../../types";
 import { config } from "../config";
 
+/**
+ * Get the collection of facebook pages managed by admin
+ * @returns
+ */
 export const getAdminPages = async () => {
 	// get firebase token
 	const firebaseAuthToken = await auth.currentUser?.getIdToken();
@@ -11,11 +16,11 @@ export const getAdminPages = async () => {
 		});
 		// if not 200
 		if (res.status !== 200) {
-			return false;
+			return;
 		}
 
 		// handle res
-		const pages = await res.json();
-		return pages;
+		const pages: PageResType = await res.json();
+		return pages.pages;
 	}
 };
