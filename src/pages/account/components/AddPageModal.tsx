@@ -30,22 +30,25 @@ const AddPageModal = () => {
 		setSelectedOption(e.target.value);
 	};
 
-	//
+	// get the pages and check if
 	const handleAdminPages = async () => {
 		try {
 			// get admin pages
 			const pages = await getAdminPages();
 			const linkedPages = auth?.workspace?.linked_pages;
-			let adminPagesIds;
-			let workspacePagesIds;
-			// get admin page ids and workspace pages ids
-			if (pages) {
-				adminPagesIds = pages?.map(() => {});
-			}
+			let workspacePagesIds: string[] = [];
+
 			if (linkedPages) {
 				workspacePagesIds = linkedPages.map((page) => {
 					return page.id;
 				});
+			}
+			if (pages) {
+				// get the list of pages that are not present in workspace
+				const notLinkedPages = pages.filter((page) => {
+					return !workspacePagesIds.includes(page.id);
+				});
+				setPages(notLinkedPages);
 			}
 		} catch (error) {
 			console.log("🚀 ~ file: AddPageModal.tsx:50 ~ handleAdminPages ~ error", error);
