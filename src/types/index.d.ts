@@ -52,3 +52,15 @@ export interface BasicServerResponseType {
 	ok: boolean;
 	msg: string;
 }
+
+/** ASSETS TYPES */
+
+export interface AssetsType {
+	name: string;
+	uri_encoded: string;
+	url: string;
+}
+export interface AssetInformationResponseType {
+	ok: string;
+	files: AssetsType[];
+}

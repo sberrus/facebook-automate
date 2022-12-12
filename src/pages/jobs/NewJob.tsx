@@ -11,7 +11,6 @@ const NewJob = () => {
 	// states
 	const [text, setText] = useState("");
 	const [showEmojis, setShowEmojis] = useState(false);
-
 	return (
 		<div className={style.jobs}>
 			<Container className="h-100">

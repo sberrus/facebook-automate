@@ -2,12 +2,25 @@
 
 .imagepicker {
 	.body {
-		padding: 2em;
+		width: 100%;
+		max-width: 1080px;
+		.back-button {
+			background-color: $light;
+			border: 1px solid $grey;
+			color: $grey-dark;
+			padding: 0.25em 1em;
+			i {
+				position: relative;
+				top: 0.06rem;
+			}
+		}
+
+		// menu
 		.menu {
 			display: flex;
 			justify-content: space-evenly;
 		}
-		.options_buttons {
+		.options-buttons {
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
@@ -19,6 +32,62 @@
 			color: $dark;
 			.button-icon {
 				font-size: 1.5em;
+			}
+		}
+
+		// gallery
+		.gallery {
+			height: 60vh;
+			.grid {
+				display: flex;
+				.img-container {
+					width: 100%;
+					padding: 1em;
+					img {
+						width: 100%;
+					}
+				}
+				// responsive
+				&.desktop {
+				}
+				&.mobile {
+				}
+			}
+
+			// error status
+			.error-message {
+				.reload-button {
+				}
+			}
+		}
+
+		// upload file
+		.upload-file {
+			.file-preview {
+				width: 100%;
+				.image-container {
+					display: flex;
+					justify-content: center;
+					margin-bottom: 1em;
+					img {
+						width: 50%;
+					}
+				}
+				.actions {
+					display: flex;
+					justify-content: flex-end;
+					.save {
+						border: 1px solid $dark;
+						color: $dark;
+						background-color: $success;
+						i {
+							display: inline-block;
+							position: relative;
+							top: 0.15rem;
+							font-size: 1.3rem;
+						}
+					}
+				}
 			}
 		}
 	}
