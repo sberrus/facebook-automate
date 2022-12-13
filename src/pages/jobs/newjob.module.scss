@@ -2,7 +2,7 @@
 
 .jobs {
 	position: relative;
-	height: 80vh;
+	min-height: 80vh;
 	width: 100%;
 	.layout {
 		display: flex;
@@ -54,6 +54,9 @@
 			section.attachments {
 				height: 40%;
 				margin-top: 0.5em;
+				.attachment {
+					word-break: break-all;
+				}
 				.inputButtons {
 					margin: 0.25em 0;
 					background-color: $light;
@@ -166,9 +169,10 @@
 		}
 	}
 	// send post
-	.bottomStripe {
+	.action {
 		width: 100%;
-		padding: 0.25em 0;
+		padding: 1em;
+		border-radius: 0.5rem;
 		background-color: $grey;
 		.container {
 			display: flex;

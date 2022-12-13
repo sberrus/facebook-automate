@@ -10,7 +10,9 @@ import Login from "../pages/login/Login";
 // private
 import Dashboard from "./../pages/dashboard/Dashboard";
 import Account from "../pages/account/Account";
-import NewJob from "../pages/jobs/NewJob";
+import JobConfigure from "../pages/jobs/JobsConfigure";
+// context
+import JobsProvider from "../pages/jobs/context/JobsProvider";
 
 const router = () => {
 	return (
@@ -28,7 +30,16 @@ const router = () => {
 					<Route path="account" element={<Account />} />
 					<Route path="jobs">
 						{/* <Route path=":id" element={<NewJob />} /> */}
-						<Route path="new-job" element={<NewJob />} />
+						<Route
+							path="new-job"
+							element={
+								<>
+									<JobsProvider>
+										<JobConfigure />
+									</JobsProvider>
+								</>
+							}
+						/>
 					</Route>
 				</Route>
 

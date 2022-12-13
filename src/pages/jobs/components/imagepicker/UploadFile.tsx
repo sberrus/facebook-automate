@@ -41,9 +41,6 @@ const UploadFile = () => {
 									<Button className="save" type="submit" disabled={uploadingStatus === "uploading"}>
 										Save file <i className="bi bi-cloud-arrow-up"></i>
 									</Button>
-									<Button className="save" type="submit" disabled={uploadingStatus === "uploading"}>
-										Save file <i className="bi bi-cloud-arrow-up"></i>
-									</Button>
 								</div>
 							</div>
 						</>

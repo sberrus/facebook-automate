@@ -2,18 +2,30 @@
 import { useState } from "react";
 import { Button, Container } from "react-bootstrap";
 import EmojiPicker, { EmojiStyle } from "emoji-picker-react";
+// context
+import useJobs from "./context/useJobs";
 // components
 import ImagePicker from "./components/imagepicker/ImagePicker";
 // style
 import style from "./newjob.module.scss";
 
-const NewJob = () => {
+const JobConfigure = () => {
+	// hooks
+	const jobs = useJobs();
 	// states
 	const [text, setText] = useState("");
 	const [showEmojis, setShowEmojis] = useState(false);
 	return (
 		<div className={style.jobs}>
 			<Container className="h-100">
+				<div className={style.action}>
+					<Container className={style.container}>
+						<span className={style.text}>NEW POST</span>
+						<button className={style.button}>
+							Publish <i className="bi bi-send"></i>
+						</button>
+					</Container>
+				</div>
 				<div className={style.layout}>
 					{/* facebook layer */}
 					<div className={style.facebookPostLayer}>
@@ -58,6 +70,7 @@ const NewJob = () => {
 							<div className={style.attachment}>
 								{/* Image Picker */}
 								<ImagePicker />
+								<p>{jobs?.postData?.asset_src && <>{jobs.postData.asset_src}</>}</p>
 							</div>
 							<div className={style.attachment}>
 								<Button className={style.inputButtons}>
@@ -216,16 +229,8 @@ const NewJob = () => {
 					{/* bottom stripe */}
 				</div>
 			</Container>
-			<div className={style.bottomStripe}>
-				<Container className={style.container}>
-					<span className={style.text}>NEW POST</span>
-					<button className={style.button}>
-						Publish <i className="bi bi-send"></i>
-					</button>
-				</Container>
-			</div>
 		</div>
 	);
 };
 
-export default NewJob;
+export default JobConfigure;

@@ -3,23 +3,25 @@ import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 // components
 import Gallery from "./Gallery";
+// context
+import useJobs from "../../context/useJobs";
 // style
 import style from "../../newjob.module.scss";
 import "./imagepicker.scss";
 import UploadFile from "./UploadFile";
 // types
-type MenuStateType = "menu" | "upload" | "galery";
+import { MenuStateType } from "../../context/context";
 
 const ImagePicker = () => {
-	const [show, setShow] = useState(false);
-	const [modalState, setModalState] = useState<MenuStateType>("menu");
+	// hooks
+	const jobs = useJobs();
 
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	// show controller
+	const handleClose = () => jobs?.assetModal.closeModal();
+	const handleShow = () => jobs?.assetModal.openModal();
 
-	// state handler
 	const handleState = (_state: MenuStateType) => {
-		setModalState(_state);
+		jobs?.assetModal.changeModalState(_state);
 	};
 
 	const isMobile = () => {
@@ -32,7 +34,7 @@ const ImagePicker = () => {
 			</Button>
 
 			<Modal
-				show={show}
+				show={jobs?.assetModal.show}
 				onHide={handleClose}
 				dialogClassName="body"
 				className="imagepicker"
@@ -46,7 +48,7 @@ const ImagePicker = () => {
 				</Modal.Header>
 				<Modal.Body>
 					{/* Menu view */}
-					{modalState === "menu" && (
+					{jobs?.assetModal.modalState === "menu" && (
 						<div className="menu">
 							<Button
 								className="options-buttons"
@@ -64,7 +66,7 @@ const ImagePicker = () => {
 						</div>
 					)}
 					{/* Saved images view */}
-					{modalState === "galery" && (
+					{jobs?.assetModal.modalState === "galery" && (
 						<>
 							<Button
 								className="back-button"
@@ -77,7 +79,7 @@ const ImagePicker = () => {
 							<Gallery />
 						</>
 					)}
-					{modalState === "upload" && (
+					{jobs?.assetModal.modalState === "upload" && (
 						<>
 							<Button
 								className="back-button"
