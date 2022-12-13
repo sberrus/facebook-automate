@@ -6,14 +6,16 @@ const UploadFile = () => {
 	// states
 	const [file, setFile] = useState<File>();
 	const [fileUrl, setFileUrl] = useState<null | string>(null);
-	const [uploadingStatus, setUploadingStatus] = useState<"sending" | "waiting" | "done!">("sending");
+	const [uploadingStatus, setUploadingStatus] = useState<"uploading" | "waiting" | "done">("waiting");
 
 	// methods
 	const handleFileUpload = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+		setUploadingStatus("uploading");
 		if (file) {
 			await uploadFile(file);
 		}
+		setUploadingStatus("done");
 	};
 
 	const handleFilePick = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,7 +38,10 @@ const UploadFile = () => {
 									<img src={fileUrl} alt="image preview" />
 								</div>
 								<div className="actions">
-									<Button className="save" type="submit">
+									<Button className="save" type="submit" disabled={uploadingStatus === "uploading"}>
+										Save file <i className="bi bi-cloud-arrow-up"></i>
+									</Button>
+									<Button className="save" type="submit" disabled={uploadingStatus === "uploading"}>
 										Save file <i className="bi bi-cloud-arrow-up"></i>
 									</Button>
 								</div>
