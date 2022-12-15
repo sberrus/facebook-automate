@@ -1,0 +1,121 @@
+@import "../../../../style/variables";
+.group-picker {
+	.button {
+		margin: 0.25em 0;
+		background-color: $light;
+		border: 1px solid $grey;
+		color: $dark;
+		text-align: start;
+		min-width: 50%;
+		&:hover {
+			background-color: $light;
+			border: 1px solid $grey-dark;
+			color: $dark;
+		}
+		&:active {
+			background-color: $light !important;
+			border: 1px solid $grey-dark !important;
+			color: $dark !important;
+		}
+	}
+}
+.group-picker-modal {
+	.body {
+		width: 100%;
+		max-width: 1080px;
+		.actions {
+			display: flex;
+			justify-content: space-evenly;
+			padding: 1em;
+			.action-button {
+				padding: 2em 0.5em;
+				width: 45%;
+				background-color: $light;
+				border: 1px solid $grey-dark;
+				color: $grey-dark;
+				i {
+					font-size: 1.25em;
+				}
+				&:hover {
+					border: 1px solid $dark;
+				}
+			}
+		}
+
+		// own groups
+		.groups-list {
+			width: 80%;
+			margin: auto;
+			padding: 1em;
+			border: 1px solid $grey;
+			border-radius: 0.5rem;
+			.dropdown-button {
+				transition: all 1s;
+				background-color: $light;
+				color: $dark;
+				border: $dark;
+				width: 100%;
+			}
+			.dropdown-menu {
+				width: 100%;
+			}
+			.group {
+				display: flex;
+				.data {
+					position: relative;
+					display: flex;
+					width: 70%;
+					// image
+					.image-container {
+						position: relative;
+						width: 5em;
+						img {
+							border-radius: 50%;
+							padding: 0.25em;
+							width: 100%;
+						}
+					}
+					// information
+					.information {
+						padding: 0.5em;
+						width: 80%;
+						display: flex;
+						align-items: center;
+						.group-name {
+							margin: 0;
+							position: relative;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							word-break: break-all;
+						}
+					}
+				}
+				.schedule {
+					width: 30%;
+				}
+
+				// radio input
+				.group-radio-input {
+				}
+			}
+
+			.group-picked {
+				position: relative;
+				.schedule-config {
+					.group-schedule {
+						.group-schedule-config {
+							.group {
+								display: flex;
+								flex-direction: column;
+								margin: auto;
+								width: 50%;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// external groups
+	}
+}

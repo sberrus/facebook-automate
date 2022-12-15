@@ -21,7 +21,7 @@ const Gallery = () => {
 
 	const pickImage = () => {
 		if (image) {
-			jobs?.setAsset(image);
+			jobs?.addAsset(image);
 		}
 	};
 	const handleFilesFetch = async () => {
@@ -29,9 +29,7 @@ const Gallery = () => {
 			const files = await getFiles();
 			if (files) {
 				setAssets(files);
-			} else {
-				setAssets([]);
-				setStatus("error");
+				setStatus("success");
 			}
 		} catch (error) {
 			console.log(error);

@@ -1,0 +1,65 @@
+@import "../../../../style/variables";
+//Groups picked
+.group {
+	position: relative;
+	width: 100%;
+	// Group information
+	.groupInfoContainer {
+		width: 100%;
+		display: flex;
+		align-items: center;
+		//
+		.imgContainer {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			border-radius: 0.5rem;
+			img {
+				border-radius: 50%;
+				width: 2.5em;
+			}
+		}
+
+		//
+		.groupInfo {
+			margin-left: 0.5em;
+			overflow: hidden;
+			.groupTitle {
+				font-size: 16px;
+				font-weight: 500;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+			.groupScope {
+				position: relative;
+				display: inline-block;
+				top: -5px;
+				font-size: 13px;
+				font-weight: 500;
+				color: $grey_dark;
+			}
+		}
+	}
+	// Group schedule
+	.groupSchedule {
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+		font-size: 0.9rem;
+		color: $grey-dark;
+		.schedule {
+			padding: 0;
+			margin: 0;
+			display: flex;
+			flex-direction: column;
+			.data {
+				color: $dark;
+				font-weight: 400;
+			}
+			.scheduleInfo {
+				font-weight: 500;
+			}
+		}
+	}
+}

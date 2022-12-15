@@ -1,59 +1,119 @@
 // imports
 import { createContext, useState } from "react";
-import { AssetsType } from "../../../types";
-import { JobsProviderProps, MenuStateType, PostDataType } from "./context";
+import { AssetsType, GroupType } from "../../../types";
+import { GroupMenuStateType, JobsProviderProps, MenuStateType, PostDataType, SharingGroupType } from "./context";
 // Login helpers
 
 interface AuthContextType {
 	postData: PostDataType | undefined;
+	// asset picker
 	assetModal: {
-		show: boolean;
-		modalState: MenuStateType;
+		showAssetModal: boolean;
+		assetModalState: MenuStateType;
 		openModal: () => void;
 		closeModal: () => void;
 		changeModalState: (_state: MenuStateType) => void;
 	};
-	setAsset: (_asset: AssetsType) => void;
+	// group picker
+	groupModal: {
+		showGroupModal: boolean;
+		groupModalState: GroupMenuStateType;
+		groupPicked: SharingGroupType | null;
+		openModal: () => void;
+		closeModal: () => void;
+		changeModalState: (_state: GroupMenuStateType) => void;
+		pickGroup: (_group: SharingGroupType) => void;
+	};
+	addAsset: (_asset: AssetsType) => void;
+	addGroup: () => void;
 }
 
 // context
 export const JobsContext = createContext<AuthContextType | null>(null);
 
 const JobsProvider = ({ children }: JobsProviderProps) => {
-	// hooks
-	const [show, setShow] = useState(false);
+	// hooks asset
+	const [showAssetModal, setShowAssetModal] = useState(false);
+	const [assetModalState, setAssetModalState] = useState<MenuStateType>("menu");
+	// groups asset
+	const [showGroupModal, setShowGroupModal] = useState(false);
+	const [groupModalState, setGroupModalState] = useState<GroupMenuStateType>("menu");
+	const [groupPicked, setGroupPicked] = useState<SharingGroupType | null>(null);
+
+	// schedule data
 	const [postData, setPostData] = useState<PostDataType>({
 		owner: "",
 		page_id: "",
 		title: "",
 		message: "",
 		type: "text",
-		sharing_groups_ids: [""],
+		sharing_groups: [],
 	});
-	const [modalState, setModalState] = useState<MenuStateType>("menu");
+
 	// Context value
 	let contextValue: AuthContextType = {
 		postData,
+		// asset modal controller
 		assetModal: {
 			/** state */
-			show,
-			modalState,
+			showAssetModal,
+			assetModalState,
 			/** methods */
 			openModal() {
-				setShow(true);
+				setShowAssetModal(true);
 			},
 			closeModal() {
-				setShow(false);
+				setShowAssetModal(false);
 			},
-			changeModalState(_state: MenuStateType) {
-				setModalState(_state);
+			changeModalState(_state) {
+				setAssetModalState(_state);
 			},
 		},
-		setAsset(_asset: AssetsType) {
+		// group modal controller
+		groupModal: {
+			/** state */
+			showGroupModal,
+			groupModalState,
+			groupPicked,
+			/** methods */
+			openModal() {
+				setShowGroupModal(true);
+			},
+			closeModal() {
+				setShowGroupModal(false);
+				setGroupPicked(null);
+			},
+			changeModalState(_state) {
+				setGroupModalState(_state);
+			},
+			pickGroup(group) {
+				setGroupPicked(group);
+			},
+		},
+		/** Add asset to post model */
+		addAsset(_asset: AssetsType) {
 			// set asset
 			setPostData({ ...postData, asset_src: _asset.uri_encoded, type: "img" });
 			// close modal
 			this.assetModal.closeModal();
+		},
+		/** Add group to post model */
+		addGroup() {
+			if (groupPicked) {
+				// copy current sharing
+				const groupsToSave: SharingGroupType[] = [...postData.sharing_groups];
+
+				groupsToSave.push(groupPicked);
+
+				//save group into model
+				setPostData({ ...postData, sharing_groups: groupsToSave });
+
+				// clean
+				setGroupPicked(null);
+				this.groupModal.closeModal();
+				return;
+			}
+			console.warn("No group picked!");
 		},
 	};
 

@@ -64,6 +64,9 @@
 					color: $dark;
 					text-align: start;
 					min-width: 50%;
+					&:hover {
+						border: 1px solid $grey-dark;
+					}
 				}
 			}
 		}
@@ -87,83 +90,23 @@
 					.hourBadge {
 						@extend .badge;
 					}
+					.time {
+						display: flex;
+						justify-content: flex-start;
+						.select {
+							width: 20%;
+						}
+					}
 				}
 			}
 			section.sharing {
 				height: 80%;
 
 				.groupsList {
-					border: 1px solid $dark;
 					border-radius: 0.5rem;
-					padding: 0.5em;
-					height: 70%;
+					height: 17.5em;
 					position: relative;
 					overflow: auto;
-					.group {
-						position: relative;
-						width: 100%;
-						padding: 0.5em 0;
-						display: flex;
-						.groupInfoContainer {
-							width: 70%;
-							display: flex;
-							align-items: center;
-							.imgContainer {
-								position: relative;
-								height: 3em;
-								width: 3em;
-								background-color: $grey;
-								border-radius: 0.5rem;
-								display: flex;
-								align-items: center;
-								justify-content: center;
-								overflow: hidden;
-								img {
-									height: 100%;
-								}
-							}
-
-							.groupInfo {
-								margin-left: 5px;
-								.groupTitle {
-									position: relative;
-									display: inline-block;
-									top: 3px;
-									font-size: 16px;
-									font-weight: 500;
-								}
-								.groupScope {
-									position: relative;
-									display: inline-block;
-									top: -5px;
-									font-size: 13px;
-									font-weight: 500;
-									color: $grey_dark;
-								}
-							}
-						}
-						.groupSchedule {
-							width: 40%;
-							.groupScheduleConfig {
-								display: flex;
-								flex-wrap: wrap;
-								.badge {
-									user-select: none;
-									border: 1px solid $dark;
-									border-radius: 0.25rem;
-									padding: 5px;
-									background-color: $light;
-								}
-								.dayBadge {
-									@extend .badge;
-								}
-								.hourBadge {
-									@extend .badge;
-									margin-left: 5px;
-								}
-							}
-						}
-					}
 				}
 			}
 		}

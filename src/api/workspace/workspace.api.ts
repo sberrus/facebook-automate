@@ -1,5 +1,6 @@
 import { auth } from "../../app/firebase";
 import { PageResType, WorkspaceType } from "../../types";
+import { GroupResType, GroupType } from "../../types/workspace";
 import { config } from "../config";
 
 /**
@@ -67,7 +68,6 @@ export const addPageToWorkspace = async (pageID: string) => {
 
 /**
  * Get the collection of facebook pages managed by admin
- * @returns
  */
 export const getAdminPages = async () => {
 	// get firebase token
@@ -88,6 +88,10 @@ export const getAdminPages = async () => {
 	}
 };
 
+/**
+ * Delete pages from workspace pages
+ * @param pageID facebook page id
+ */
 export const deletePage = async (pageID: string) => {
 	try {
 		const firebaseAuthToken = await auth.currentUser?.getIdToken();
@@ -111,5 +115,24 @@ export const deletePage = async (pageID: string) => {
 		// user not found
 		console.log(error);
 		return null;
+	}
+};
+
+export const getGroups = async () => {
+	// get firebase token
+	const firebaseAuthToken = await auth.currentUser?.getIdToken();
+	// check if token is received
+	if (firebaseAuthToken) {
+		const res = await fetch(`${config.apiUrl}/api/groups`, {
+			headers: { "x-auth-firebase": firebaseAuthToken },
+		});
+		// if not 200
+		if (res.status !== 200) {
+			return;
+		}
+
+		// handle res
+		const groups: GroupResType = await res.json();
+		return groups.groups;
 	}
 };
