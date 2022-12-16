@@ -1,7 +1,15 @@
 // imports
 import { createContext, useState } from "react";
+import { initNewJob } from "../../../api/scheduler/scheduler.api";
 import { AssetsType } from "../../../types";
-import { GroupMenuStateType, JobsProviderProps, MenuStateType, PostDataType, SharingGroupType } from "./context";
+import {
+	GroupMenuStateType,
+	JobsProviderProps,
+	MenuStateType,
+	PostDataType,
+	ScheduleConfigType,
+	SharingGroupType,
+} from "./context";
 // Login helpers
 
 interface AuthContextType {
@@ -24,14 +32,32 @@ interface AuthContextType {
 		changeModalState: (_state: GroupMenuStateType) => void;
 		pickGroup: (_group: SharingGroupType) => void;
 	};
+	setTitle: (title: string) => void;
+	setMessage: (message: string) => void;
 	addAsset: (_asset: AssetsType) => void;
 	addGroup: () => void;
+	updatePostSchedule: (scheduleConfig: ScheduleConfigType) => void;
+	sendJob: () => void;
 }
 
 // context
 export const JobsContext = createContext<AuthContextType | null>(null);
 
 const JobsProvider = ({ children }: JobsProviderProps) => {
+	// schedule data
+	const [postData, setPostData] = useState<PostDataType>({
+		title: "",
+		page_post: {
+			message: "",
+			type: "text",
+			schedule_config: {
+				date: "0",
+				hour: "00",
+				minute: "00",
+			},
+		},
+		sharing_groups: [],
+	});
 	// hooks asset
 	const [showAssetModal, setShowAssetModal] = useState(false);
 	const [assetModalState, setAssetModalState] = useState<MenuStateType>("menu");
@@ -39,16 +65,6 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 	const [showGroupModal, setShowGroupModal] = useState(false);
 	const [groupModalState, setGroupModalState] = useState<GroupMenuStateType>("menu");
 	const [groupPicked, setGroupPicked] = useState<SharingGroupType | null>(null);
-
-	// schedule data
-	const [postData, setPostData] = useState<PostDataType>({
-		title: "",
-		page_post: {
-			message: "",
-			type: "text",
-		},
-		sharing_groups: [],
-	});
 
 	// Context value
 	let contextValue: AuthContextType = {
@@ -90,12 +106,28 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 				setGroupPicked(group);
 			},
 		},
+		/** Update Title */
+		setTitle(title) {
+			setPostData({
+				...postData,
+				title,
+			});
+		},
+		/** Update Message */
+		setMessage(message) {
+			setPostData({
+				...postData,
+				page_post: {
+					...postData.page_post,
+					message,
+				},
+			});
+		},
 		/** Add asset to post model */
 		addAsset(_asset: AssetsType) {
 			// set asset
 			setPostData({
 				...postData,
-				title: "",
 				page_post: {
 					...postData?.page_post,
 					asset_src: _asset.uri_encoded,
@@ -104,6 +136,16 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 			});
 			// close modal
 			this.assetModal.closeModal();
+		},
+		/** Update Post Schedule */
+		updatePostSchedule(scheduleConfig) {
+			setPostData({
+				...postData,
+				page_post: {
+					...postData.page_post,
+					schedule_config: scheduleConfig,
+				},
+			});
 		},
 		/** Add group to post model */
 		addGroup() {
@@ -122,6 +164,15 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 				return;
 			}
 			console.warn("No group picked!");
+		},
+		/** Init process to create a new job */
+		async sendJob() {
+			try {
+				const res = await initNewJob(postData);
+			} catch (error) {
+				console.log("🚀 ~ file: JobsProvider.tsx:171 ~ sendJob ~ error", error);
+				alert("Error creating new Post Job");
+			}
 		},
 	};
 

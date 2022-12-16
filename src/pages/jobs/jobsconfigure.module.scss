@@ -76,28 +76,6 @@
 			padding: 1em;
 			section.schedule {
 				height: 20%;
-				.badge {
-					user-select: none;
-					border: 1px soli $dark;
-					border-radius: 0.5rem;
-					padding: 5px;
-					background-color: $light;
-				}
-				.scheduleConfig {
-					.dayBadge {
-						@extend .badge;
-					}
-					.hourBadge {
-						@extend .badge;
-					}
-					.time {
-						display: flex;
-						justify-content: flex-start;
-						.select {
-							width: 20%;
-						}
-					}
-				}
 			}
 			section.sharing {
 				height: 80%;

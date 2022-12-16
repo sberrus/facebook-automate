@@ -1,0 +1,12 @@
+@import "../../../../style/variables";
+.schedule-config {
+	margin: auto;
+	.group {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+	.time-block {
+		display: flex;
+	}
+}
