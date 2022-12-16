@@ -1,7 +1,7 @@
 @import "../../../../style/variables";
 .group-picker {
 	.button {
-		margin: 0.25em 0;
+		margin: auto;
 		background-color: $light;
 		border: 1px solid $grey;
 		color: $dark;
@@ -104,11 +104,15 @@
 				.schedule-config {
 					.group-schedule {
 						.group-schedule-config {
+							margin: auto;
+							width: 50%;
 							.group {
 								display: flex;
 								flex-direction: column;
-								margin: auto;
-								width: 50%;
+								width: 100%;
+							}
+							.time-block {
+								display: flex;
 							}
 						}
 					}

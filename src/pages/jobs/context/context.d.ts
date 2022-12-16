@@ -2,9 +2,9 @@ import { GroupType } from "../../../types";
 
 // schedule
 export interface ScheduleConfigType {
-	date: number;
-	hour?: number;
-	minute?: number;
+	date: string;
+	hour?: string;
+	minute?: string;
 }
 
 // sharing groups model

@@ -1,6 +1,6 @@
 // imports
 import { createContext, useState } from "react";
-import { AssetsType, GroupType } from "../../../types";
+import { AssetsType } from "../../../types";
 import { GroupMenuStateType, JobsProviderProps, MenuStateType, PostDataType, SharingGroupType } from "./context";
 // Login helpers
 

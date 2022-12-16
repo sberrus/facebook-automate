@@ -72,11 +72,12 @@ const ScheduleLayer = () => {
 									))}
 								</>
 							) : (
-								<>!groups</>
+								<>
+									<h6 className={style.warnAdvice}>No groups selected...</h6>
+								</>
 							)}
 						</>
 					)}
-					<hr />
 					<GroupsPicker />
 				</div>
 			</section>

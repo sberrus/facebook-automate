@@ -24,19 +24,19 @@ const Groups = ({ job }: GroupType) => {
 					<p className={style.schedule}>
 						<span className={style.data}>Date:</span>
 						<span className={style.scheduleInfo}>
-							{job.schedule.date === 0
+							{job.schedule.date === "0"
 								? "Monday"
-								: job.schedule.date === 1
+								: job.schedule.date === "1"
 								? "Tuesday"
-								: job.schedule.date === 2
+								: job.schedule.date === "2"
 								? "Wednesday"
-								: job.schedule.date === 3
+								: job.schedule.date === "3"
 								? "Thursday"
-								: job.schedule.date === 4
+								: job.schedule.date === "4"
 								? "Friday"
-								: job.schedule.date === 5
+								: job.schedule.date === "5"
 								? "Saturday"
-								: job.schedule.date === 6 && "Sunday"}
+								: job.schedule.date === "6" && "Sunday"}
 						</span>
 					</p>
 					<p className={style.schedule}>
@@ -47,6 +47,7 @@ const Groups = ({ job }: GroupType) => {
 					</p>
 				</div>
 			</div>
+			<hr />
 		</>
 	);
 };
