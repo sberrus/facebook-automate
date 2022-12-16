@@ -58,7 +58,7 @@ const PostLayer = () => {
 				<div className={style.attachment}>
 					{/* Image Picker */}
 					<ImagePicker />
-					{jobs?.postData?.asset_src && <p>Image Picked ✅</p>}
+					{jobs?.postData?.page_post.asset_src && <p>Image Picked ✅</p>}
 				</div>
 				{/* <div className={style.attachment}>
 					<Button className={style.inputButtons}>

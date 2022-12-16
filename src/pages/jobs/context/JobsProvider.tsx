@@ -42,11 +42,11 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 
 	// schedule data
 	const [postData, setPostData] = useState<PostDataType>({
-		owner: "",
-		page_id: "",
 		title: "",
-		message: "",
-		type: "text",
+		page_post: {
+			message: "",
+			type: "text",
+		},
 		sharing_groups: [],
 	});
 
@@ -93,7 +93,15 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 		/** Add asset to post model */
 		addAsset(_asset: AssetsType) {
 			// set asset
-			setPostData({ ...postData, asset_src: _asset.uri_encoded, type: "img" });
+			setPostData({
+				...postData,
+				title: "",
+				page_post: {
+					...postData?.page_post,
+					asset_src: _asset.uri_encoded,
+					type: "img",
+				},
+			});
 			// close modal
 			this.assetModal.closeModal();
 		},
