@@ -40,7 +40,7 @@ const OwnGroups = () => {
 	const handleChangeHour = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		setDatePicked({ ...datePicked, hour: e.target.value });
 	};
-	const handleChangeMinute = (e: React.ChangeEvent<HTMLSelectElement>) => {
+	const handleChangeMinute = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setDatePicked({ ...datePicked, minute: e.target.value });
 	};
 
@@ -141,13 +141,13 @@ const OwnGroups = () => {
 								<Form.Group className="group date">
 									<Form.Label>Day:</Form.Label>
 									<Form.Select className="select" onChange={handleChangeDate}>
-										<option value="0">Monday</option>
-										<option value="1">Tuesday</option>
-										<option value="2">Wednesday</option>
-										<option value="3">Thursday</option>
-										<option value="4">Friday</option>
-										<option value="5">Saturday</option>
-										<option value="6">Sunday</option>
+										<option value="1">Monday</option>
+										<option value="2">Tuesday</option>
+										<option value="3">Wednesday</option>
+										<option value="4">Thursday</option>
+										<option value="5">Friday</option>
+										<option value="6">Saturday</option>
+										<option value="0">Sunday</option>
 									</Form.Select>
 								</Form.Group>
 								<div className="time-block">
@@ -182,13 +182,7 @@ const OwnGroups = () => {
 									</Form.Group>
 									<Form.Group className="group time">
 										<Form.Label>Minutes:</Form.Label>
-										<Form.Select className="select" onChange={handleChangeMinute}>
-											<option value="00">00</option>
-											<option value="15">15</option>
-											<option value="30">30</option>
-											<option value="45">45</option>
-											<option value="60">60</option>
-										</Form.Select>
+										<Form.Control type="number" min={0} max={59} onChange={handleChangeMinute} />
 									</Form.Group>
 								</div>
 							</div>

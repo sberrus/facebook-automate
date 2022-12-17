@@ -1,11 +1,11 @@
-import { GroupType } from "../../context/jobs.context";
+import { GroupConfigType } from "../../context/jobs.context";
 import style from "./group.module.scss";
 
-type GroupType = {
-	job: GroupType;
+type GroupPropType = {
+	job: GroupConfigType;
 };
 
-const Groups = ({ job }: GroupType) => {
+const Groups = ({ job }: GroupPropType) => {
 	return (
 		<>
 			<div className={style.group}>

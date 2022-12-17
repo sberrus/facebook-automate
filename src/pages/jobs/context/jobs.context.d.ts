@@ -13,7 +13,7 @@ export interface GroupType {
 }
 
 // sharing groups model
-export interface GroupType {
+export interface GroupConfigType {
 	group: GroupType;
 	schedule: ScheduleConfigType;
 }
@@ -32,7 +32,7 @@ export interface PageType {
 export interface PostDataType {
 	title: string;
 	page_post: PageType;
-	sharing_groups: GroupType[];
+	sharing_groups: GroupConfigType[];
 }
 
 // schedule config model
