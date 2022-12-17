@@ -1,6 +1,6 @@
 // imports
 import { Button } from "react-bootstrap";
-import { GroupMenuStateType } from "../../context/context";
+import { GroupMenuStateType } from "../../context/jobs.context";
 import useJobs from "../../context/useJobs";
 // styles
 import "./groupspicker.scss";

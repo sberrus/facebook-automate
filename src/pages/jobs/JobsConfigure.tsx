@@ -21,7 +21,10 @@ const JobConfigure = () => {
 		e.preventDefault();
 
 		// Create new job
-		jobs?.sendJob();
+		const userRes = confirm("Create new Schedule?");
+		if (userRes) {
+			jobs?.sendJob();
+		}
 	};
 
 	//

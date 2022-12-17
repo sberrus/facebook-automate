@@ -1,8 +1,8 @@
-import { SharingGroupType } from "../../context/context";
+import { GroupType } from "../../context/jobs.context";
 import style from "./group.module.scss";
 
 type GroupType = {
-	job: SharingGroupType;
+	job: GroupType;
 };
 
 const Groups = ({ job }: GroupType) => {

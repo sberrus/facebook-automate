@@ -1,6 +1,6 @@
 // types
 import { auth } from "../../app/firebase";
-import { PostDataType } from "../../pages/jobs/context/context";
+import { PostDataType } from "../../pages/jobs/context/jobs.context";
 import { config } from "../config";
 
 //

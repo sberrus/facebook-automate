@@ -13,12 +13,12 @@ export interface GroupType {
 }
 
 // sharing groups model
-export interface SharingGroupType {
+export interface GroupType {
 	group: GroupType;
 	schedule: ScheduleConfigType;
 }
 
-export interface PagePostType {
+export interface PageType {
 	message: string;
 	type: "text" | "img" | "video";
 	emotion?: string;
@@ -31,11 +31,11 @@ export interface PagePostType {
 // post model
 export interface PostDataType {
 	title: string;
-	page_post: PagePostType;
-	sharing_groups: SharingGroupType[];
+	page_post: PageType;
+	sharing_groups: GroupType[];
 }
 
-// schedule
+// schedule config model
 export interface ScheduleConfigType {
 	date: string;
 	hour?: string;

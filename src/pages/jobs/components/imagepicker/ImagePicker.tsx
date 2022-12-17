@@ -9,7 +9,7 @@ import useJobs from "../../context/useJobs";
 import style from "../../jobsconfigure.module.scss";
 import "./imagepicker.scss";
 // types
-import { MenuStateType } from "../../context/context";
+import { MenuStateType } from "../../context/jobs.context";
 
 const ImagePicker = () => {
 	// hooks

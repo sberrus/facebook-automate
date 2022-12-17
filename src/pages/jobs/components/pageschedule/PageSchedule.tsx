@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 // styles
 import "./pageschedule.scss";
 // types
-import { ScheduleConfigType } from "../../context/context";
+import { ScheduleConfigType } from "../../context/jobs.context";
 import useJobs from "../../context/useJobs";
 //
 const PageSchedule = () => {

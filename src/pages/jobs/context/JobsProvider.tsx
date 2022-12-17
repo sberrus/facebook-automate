@@ -8,8 +8,8 @@ import {
 	MenuStateType,
 	PostDataType,
 	ScheduleConfigType,
-	SharingGroupType,
-} from "./context";
+	GroupType,
+} from "./jobs.context";
 // Login helpers
 
 interface AuthContextType {
@@ -26,11 +26,11 @@ interface AuthContextType {
 	groupModal: {
 		showGroupModal: boolean;
 		groupModalState: GroupMenuStateType;
-		groupPicked: SharingGroupType | null;
+		groupPicked: GroupType | null;
 		openModal: () => void;
 		closeModal: () => void;
 		changeModalState: (_state: GroupMenuStateType) => void;
-		pickGroup: (_group: SharingGroupType) => void;
+		pickGroup: (_group: GroupType) => void;
 	};
 	setTitle: (title: string) => void;
 	setMessage: (message: string) => void;
@@ -64,7 +64,7 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 	// groups asset
 	const [showGroupModal, setShowGroupModal] = useState(false);
 	const [groupModalState, setGroupModalState] = useState<GroupMenuStateType>("menu");
-	const [groupPicked, setGroupPicked] = useState<SharingGroupType | null>(null);
+	const [groupPicked, setGroupPicked] = useState<GroupType | null>(null);
 
 	// Context value
 	let contextValue: AuthContextType = {
@@ -151,7 +151,7 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 		addGroup() {
 			if (groupPicked) {
 				// copy current sharing
-				const groupsToSave: SharingGroupType[] = [...postData.sharing_groups];
+				const groupsToSave: GroupType[] = [...postData.sharing_groups];
 
 				groupsToSave.push(groupPicked);
 
