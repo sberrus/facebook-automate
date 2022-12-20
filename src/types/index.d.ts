@@ -24,6 +24,7 @@ export interface GroupType {
 			url: string;
 		};
 	};
+	administrator: boolean;
 }
 
 // Page data type

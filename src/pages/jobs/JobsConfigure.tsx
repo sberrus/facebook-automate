@@ -1,6 +1,9 @@
 // imports
+import { useEffect, useState } from "react";
 import { Container, Form } from "react-bootstrap";
 import { auth } from "../../app/firebase";
+import UseAuth from "../../context/auth/UseAuth";
+import { PageType } from "../../types";
 import useJobs from "./context/useJobs";
 // style
 import style from "./jobsconfigure.module.scss";
@@ -10,6 +13,14 @@ import ScheduleLayer from "./layout/ScheduleLayer";
 const JobConfigure = () => {
 	// hooks
 	const jobs = useJobs();
+	const _auth = UseAuth();
+	// states
+	const [pages, setPages] = useState<PageType[]>(() => {
+		if (_auth?.workspace?.linked_pages) {
+			return _auth?.workspace?.linked_pages;
+		}
+		return [];
+	});
 
 	//
 	const showToken = async () => {
@@ -17,6 +28,9 @@ const JobConfigure = () => {
 	};
 
 	// methods
+	const handlePageIDChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+		jobs?.setPageID(e.target.value);
+	};
 	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
@@ -28,11 +42,34 @@ const JobConfigure = () => {
 	};
 
 	//
+	useEffect(() => {
+		if (_auth?.workspace?.linked_pages) {
+			setPages(_auth?.workspace?.linked_pages);
+		}
+
+		return () => {};
+	}, [_auth?.workspace?.linked_pages]);
+
 	return (
 		<div className={style.jobs}>
 			<Form id="postConfig" onSubmit={handleSubmit}>
 				<button onClick={showToken}>.</button>
 				<Container className="h-100">
+					<h5>Page</h5>
+					<Form.Select onChange={handlePageIDChange} required>
+						<option>Pick a page</option>
+						{pages.length > 0 ? (
+							<>
+								{pages.map((page) => (
+									<option value={page.id} key={page.id}>
+										{page.name}
+									</option>
+								))}
+							</>
+						) : (
+							<></>
+						)}
+					</Form.Select>
 					<div className={style.layout}>
 						{/* post layer */}
 						<PostLayer />
@@ -40,17 +77,17 @@ const JobConfigure = () => {
 						<ScheduleLayer />
 					</div>
 					{/* bottom stripe */}
-					<div className={style.action}>
-						<Container className={style.container}>
-							<span className={style.text}>NEW POST</span>
-
-							{/* magic button */}
-							<button type="submit" className={style.button}>
-								Publish <i className="bi bi-send"></i>
-							</button>
-						</Container>
-					</div>
 				</Container>
+				<div className={style.action}>
+					<Container className={style.container}>
+						<span className={style.text}>NEW POST</span>
+
+						{/* magic button */}
+						<button type="submit" className={style.button}>
+							Publish <i className="bi bi-send"></i>
+						</button>
+					</Container>
+				</div>
 			</Form>
 		</div>
 	);

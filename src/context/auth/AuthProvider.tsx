@@ -33,10 +33,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 		return JSON.parse(localStorage.getItem("credentials")!);
 	});
 
-	const [workspace, setWorkspace] = useState<WorkspaceType | null>(() => {
-		// workspace not found
-		return null;
-	});
+	const [workspace, setWorkspace] = useState<WorkspaceType | null>(null);
 
 	useEffect(() => {
 		// check current session

@@ -11,7 +11,7 @@ const PageSchedule = () => {
 	// hooks
 	const jobs = useJobs();
 	const [postScheduleData, SetPostScheduleData] = useState<ScheduleConfigType>({
-		date: "0",
+		date: "1",
 		minute: "00",
 		hour: "00",
 	});

@@ -35,9 +35,10 @@ interface AuthContextType {
 	setTitle: (title: string) => void;
 	setMessage: (message: string) => void;
 	addAsset: (_asset: AssetsType) => void;
+	setPageID: (page: string) => void;
 	addGroup: () => void;
-	updatePostSchedule: (scheduleConfig: ScheduleConfigType) => void;
 	sendJob: () => void;
+	updatePostSchedule: (scheduleConfig: ScheduleConfigType) => void;
 }
 
 // context
@@ -48,6 +49,7 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 	const [postData, setPostData] = useState<PostDataType>({
 		title: "",
 		page_post: {
+			page_id: "",
 			message: "",
 			type: "text",
 			schedule_config: {
@@ -121,6 +123,13 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 					...postData.page_post,
 					message,
 				},
+			});
+		},
+		/** Set pageID*/
+		setPageID(page) {
+			setPostData({
+				...postData,
+				page_post: { ...postData.page_post, page_id: page },
 			});
 		},
 		/** Add asset to post model */

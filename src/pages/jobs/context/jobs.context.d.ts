@@ -18,7 +18,8 @@ export interface GroupConfigType {
 	schedule: ScheduleConfigType;
 }
 
-export interface PageType {
+export interface PageConfigType {
+	page_id: string; // fb page id where to publish
 	message: string;
 	type: "text" | "img" | "video";
 	emotion?: string;
@@ -31,7 +32,7 @@ export interface PageType {
 // post model
 export interface PostDataType {
 	title: string;
-	page_post: PageType;
+	page_post: PageConfigType;
 	sharing_groups: GroupConfigType[];
 }
 
@@ -51,15 +52,3 @@ export type MenuStateType = "menu" | "upload" | "galery";
 
 // group picker menu type
 export type GroupMenuStateType = "menu" | "own" | "external";
-
-/**
- * TODO: Move all types to types directory
- */
-
-/**
- *
- *
- *
- * hay que organizar los datos para enviarlos al backend de manera correcta para que se puedan crear los
- * jobs con los datos organizados correctamente....
- */

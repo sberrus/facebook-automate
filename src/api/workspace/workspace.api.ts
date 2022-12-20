@@ -1,6 +1,6 @@
 import { auth } from "../../app/firebase";
 import { PageResType, WorkspaceType } from "../../types";
-import { GroupResType, GroupType } from "../../types/workspace";
+import { GroupResType } from "../../types/workspace";
 import { config } from "../config";
 
 /**

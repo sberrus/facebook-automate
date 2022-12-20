@@ -94,9 +94,12 @@
 	}
 	// send post
 	.action {
+		position: fixed;
+		bottom: 0;
 		width: 100%;
 		padding: 1em;
-		border-radius: 0.5rem;
+		border-top-left-radius: 1rem;
+		border-top-right-radius: 1rem;
 		background-color: $grey;
 		.container {
 			display: flex;
