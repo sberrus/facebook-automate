@@ -31,8 +31,8 @@ const ScheduleLayer = () => {
 						<>
 							{jobs.postData.sharing_groups.length > 0 ? (
 								<>
-									{jobs.postData.sharing_groups.map((job) => (
-										<Group job={job} key={job.group.id} />
+									{jobs.postData.sharing_groups.map((job, idx) => (
+										<Group job={job} key={idx} />
 									))}
 								</>
 							) : (

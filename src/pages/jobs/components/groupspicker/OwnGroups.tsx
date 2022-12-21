@@ -52,7 +52,6 @@ const OwnGroups = () => {
 		}
 
 		const groups = await getGroups();
-		console.log(groups);
 		if (groups) {
 			setWorkspaceAdminGroups(groups);
 		}
