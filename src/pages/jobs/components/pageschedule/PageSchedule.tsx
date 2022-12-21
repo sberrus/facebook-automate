@@ -84,7 +84,13 @@ const PageSchedule = () => {
 				</Form.Group>
 				<Form.Group className="group time">
 					<Form.Label>Minutes:</Form.Label>
-					<Form.Control type="number" min={0} max={59} onChange={handleChangeMinute} />
+					<Form.Control
+						type="number"
+						min={0}
+						max={59}
+						onChange={handleChangeMinute}
+						value={postScheduleData.minute}
+					/>
 				</Form.Group>
 			</div>
 		</div>
