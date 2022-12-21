@@ -79,10 +79,14 @@
 			}
 			section.sharing {
 				height: 80%;
-
+				.sharingActions {
+					padding: 0.5em 0;
+					display: flex;
+					justify-content: space-between;
+				}
 				.groupsList {
 					border-radius: 0.5rem;
-					height: 17.5em;
+					height: 15em;
 					position: relative;
 					overflow: auto;
 					.warnAdvice {
@@ -94,12 +98,10 @@
 	}
 	// send post
 	.action {
-		position: fixed;
-		bottom: 0;
 		width: 100%;
 		padding: 1em;
-		border-top-left-radius: 1rem;
-		border-top-right-radius: 1rem;
+		border-bottom-left-radius: 1rem;
+		border-bottom-right-radius: 1rem;
 		background-color: $grey;
 		.container {
 			display: flex;

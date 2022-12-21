@@ -53,7 +53,17 @@ const JobConfigure = () => {
 	return (
 		<div className={style.jobs}>
 			<Form id="postConfig" onSubmit={handleSubmit}>
-				<button onClick={showToken}>.</button>
+				<div className={style.action}>
+					<Container className={style.container}>
+						<span className={style.text}>NEW POST</span>
+
+						{/* magic button */}
+						<button type="submit" className={style.button}>
+							Publish <i className="bi bi-send"></i>
+						</button>
+					</Container>
+				</div>
+				{/* <button onClick={showToken}>.</button> */}
 				<Container className="h-100">
 					<h5>Page</h5>
 					<Form.Select onChange={handlePageIDChange} required>
@@ -78,16 +88,6 @@ const JobConfigure = () => {
 					</div>
 					{/* bottom stripe */}
 				</Container>
-				<div className={style.action}>
-					<Container className={style.container}>
-						<span className={style.text}>NEW POST</span>
-
-						{/* magic button */}
-						<button type="submit" className={style.button}>
-							Publish <i className="bi bi-send"></i>
-						</button>
-					</Container>
-				</div>
 			</Form>
 		</div>
 	);

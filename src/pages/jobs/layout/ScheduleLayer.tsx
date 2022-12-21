@@ -21,7 +21,10 @@ const ScheduleLayer = () => {
 			</section>
 			{/* Sharing */}
 			<section className={style.sharing}>
-				<h3 className={style.sectionTitle}>Sharing</h3>
+				<div className={style.sharingActions}>
+					<h3 className={style.sectionTitle}>Sharing</h3>
+					<GroupsPicker />
+				</div>
 				{/* group list */}
 				<div className={style.groupsList}>
 					{jobs?.postData?.sharing_groups && (
@@ -39,7 +42,6 @@ const ScheduleLayer = () => {
 							)}
 						</>
 					)}
-					<GroupsPicker />
 				</div>
 			</section>
 		</div>
