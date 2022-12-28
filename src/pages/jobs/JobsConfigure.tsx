@@ -22,11 +22,6 @@ const JobConfigure = () => {
 		return [];
 	});
 
-	//
-	const showToken = async () => {
-		console.log(await auth.currentUser?.getIdToken());
-	};
-
 	// methods
 	const handlePageIDChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
 		jobs?.setPageID(e.target.value);
@@ -63,7 +58,6 @@ const JobConfigure = () => {
 						</button>
 					</Container>
 				</div>
-				{/* <button onClick={showToken}>.</button> */}
 				<Container className="h-100">
 					<h5>Page</h5>
 					<Form.Select onChange={handlePageIDChange} required>

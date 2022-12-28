@@ -1,6 +1,6 @@
 // imports
 import { createContext, useState } from "react";
-import { initNewJob } from "../../../api/scheduler/scheduler.api";
+import { createNewJob } from "../../../api/scheduler/scheduler.api";
 import { AssetsType } from "../../../types";
 import {
 	GroupMenuStateType,
@@ -100,6 +100,7 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 			closeModal() {
 				setShowGroupModal(false);
 				setGroupPicked(null);
+				setGroupModalState("menu");
 			},
 			changeModalState(_state) {
 				setGroupModalState(_state);
@@ -177,7 +178,7 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 		/** Init process to create a new job */
 		async sendJob() {
 			try {
-				const res = await initNewJob(postData);
+				const res = await createNewJob(postData);
 			} catch (error) {
 				console.log("🚀 ~ file: JobsProvider.tsx:171 ~ sendJob ~ error", error);
 				alert("Error creating new Post Job");

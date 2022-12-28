@@ -45,3 +45,53 @@ export interface PageType {
 		};
 	};
 }
+
+/**
+ * Post Scope Types
+ *
+ */
+
+//
+export interface PostScopeType {
+	id: string;
+	title: string;
+	last_post_published: PostPublishedType | undefined;
+	page_post_job: PostScopePageJobType | undefined;
+	workspaceID: string;
+	groups: {
+		owned: PostScopeGroupJobType[];
+		external: PostScopeGroupJobType[];
+	};
+	post_scope_status: boolean;
+}
+
+export interface PageConfigType {
+	page_id: string; // fb page id where to publish
+	message: string;
+	type: "text" | "img" | "video";
+	schedule_config: ScheduleConfigType;
+	emotion?: string;
+	asset_src?: string;
+	location?: string;
+	job_status?: "programmed" | "draft" | "trash";
+}
+
+interface PostScopePageJobType extends PageConfigType {
+	job_id: string;
+}
+
+export interface PostPublishedType {
+	id: string;
+	permalink_url: string;
+}
+
+interface PostScopeGroupJobType extends GroupType {
+	job_id: string;
+	schedule: ScheduleConfigType;
+}
+
+export interface ScheduleConfigType {
+	date: string;
+	hour: string;
+	minute: string;
+}

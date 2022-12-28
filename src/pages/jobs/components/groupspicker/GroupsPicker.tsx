@@ -8,6 +8,7 @@ import useJobs from "../../context/useJobs";
 // styles
 import "./groupspicker.scss";
 import OwnGroups from "./OwnGroups";
+import ExternalGroups from "./ExternalGroups";
 
 //
 const GroupsPicker = () => {
@@ -35,7 +36,7 @@ const GroupsPicker = () => {
 				<Modal.Body className="body">
 					{jobs?.groupModal.groupModalState === "menu" && <Menu />}
 					{jobs?.groupModal.groupModalState === "own" && <OwnGroups />}
-					{jobs?.groupModal.groupModalState === "external" && <Menu />}
+					{jobs?.groupModal.groupModalState === "external" && <ExternalGroups />}
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant="secondary" onClick={jobs?.groupModal.closeModal}>
