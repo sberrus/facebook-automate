@@ -24,19 +24,19 @@ const Groups = ({ job }: GroupPropType) => {
 					<p className={style.schedule}>
 						<span className={style.data}>Date:</span>
 						<span className={style.scheduleInfo}>
-							{job.schedule.date === "0"
+							{job.schedule.date === "1"
 								? "Monday"
-								: job.schedule.date === "1"
-								? "Tuesday"
 								: job.schedule.date === "2"
-								? "Wednesday"
+								? "Tuesday"
 								: job.schedule.date === "3"
-								? "Thursday"
+								? "Wednesday"
 								: job.schedule.date === "4"
-								? "Friday"
+								? "Thursday"
 								: job.schedule.date === "5"
+								? "Friday"
+								: job.schedule.date === "6"
 								? "Saturday"
-								: job.schedule.date === "6" && "Sunday"}
+								: job.schedule.date === "0" && "Sunday"}
 						</span>
 					</p>
 					<p className={style.schedule}>

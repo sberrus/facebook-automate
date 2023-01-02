@@ -118,21 +118,54 @@ export const deletePage = async (pageID: string) => {
 	}
 };
 
-export const getGroups = async () => {
+/**
+ * Get the list of groups managed by admin
+ */
+export const getOwnGroups = async () => {
 	// get firebase token
 	const firebaseAuthToken = await auth.currentUser?.getIdToken();
 	// check if token is received
 	if (firebaseAuthToken) {
-		const res = await fetch(`${config.apiUrl}/api/groups`, {
-			headers: { "x-auth-firebase": firebaseAuthToken },
-		});
-		// if not 200
-		if (res.status !== 200) {
-			return;
-		}
+		try {
+			const res = await fetch(`${config.apiUrl}/api/groups`, {
+				headers: { "x-auth-firebase": firebaseAuthToken },
+			});
+			// if not 200
+			if (res.status !== 200) {
+				return;
+			}
 
-		// handle res
-		const groups: GroupResType = await res.json();
-		return groups.groups;
+			// handle res
+			const groups: GroupResType = await res.json();
+			return groups.groups;
+		} catch (error) {
+			console.log(error);
+		}
+	}
+};
+
+/**
+ * Given a group id, retrieve its data if valid.
+ * @param groupUrl
+ */
+export const checkExternalGroup = async (groupUrl: string) => {
+	// get firebase token
+	const firebaseAuthToken = await auth.currentUser?.getIdToken();
+	// check if group is valid
+	if (firebaseAuthToken) {
+		try {
+			const httpRes = await fetch(`${config.apiUrl}/api/groups/external?url=${groupUrl}`, {
+				headers: { "x-auth-firebase": firebaseAuthToken },
+			});
+
+			if (httpRes.status !== 200) {
+				return null;
+			}
+
+			const res = httpRes.json();
+			return res;
+		} catch (error) {
+			console.log(error);
+		}
 	}
 };

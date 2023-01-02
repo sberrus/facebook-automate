@@ -27,17 +27,39 @@ const ScheduleLayer = () => {
 				</div>
 				{/* group list */}
 				<div className={style.groupsList}>
+					<h5>Own groups Schedules</h5>
 					{jobs?.postData?.sharing_groups && (
 						<>
 							{jobs.postData.sharing_groups.length > 0 ? (
 								<>
-									{jobs.postData.sharing_groups.map((job, idx) => (
-										<Group job={job} key={idx} />
-									))}
+									{jobs.postData.sharing_groups
+										.filter((job) => job.owner)
+										.map((job, idx) => (
+											<Group job={job} key={idx} />
+										))}
 								</>
 							) : (
 								<>
-									<h6 className={style.warnAdvice}>No groups selected...</h6>
+									<p className={style.warnAdvice}>No own group schedule configured...</p>
+								</>
+							)}
+						</>
+					)}
+					<hr />
+					<h5>Exteral groups Schedules</h5>
+					{jobs?.postData?.sharing_groups && (
+						<>
+							{jobs.postData.sharing_groups.length > 0 ? (
+								<>
+									{jobs.postData.sharing_groups
+										.filter((job) => !job.owner)
+										.map((job, idx) => (
+											<Group job={job} key={idx} />
+										))}
+								</>
+							) : (
+								<>
+									<p className={style.warnAdvice}>No external group schedule configured...</p>
 								</>
 							)}
 						</>

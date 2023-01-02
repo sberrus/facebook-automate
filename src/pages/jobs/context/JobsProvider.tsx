@@ -36,7 +36,8 @@ interface AuthContextType {
 	setMessage: (message: string) => void;
 	addAsset: (_asset: AssetsType) => void;
 	setPageID: (page: string) => void;
-	addGroup: () => void;
+	addOwnGroup: () => void;
+	addExternalGroup: () => void;
 	sendJob: () => void;
 	updatePostSchedule: (scheduleConfig: ScheduleConfigType) => void;
 }
@@ -157,8 +158,26 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 				},
 			});
 		},
-		/** Add group to post model */
-		addGroup() {
+		/** Add own group to post model */
+		addOwnGroup() {
+			if (groupPicked) {
+				// copy current sharing
+				const groupsToSave: GroupConfigType[] = [...postData.sharing_groups];
+
+				groupsToSave.push(groupPicked);
+
+				//save group into model
+				setPostData({ ...postData, sharing_groups: groupsToSave });
+
+				// clean and close modal
+				setGroupPicked(null);
+				this.groupModal.closeModal();
+				return;
+			}
+			console.warn("No group picked!");
+		},
+		/** Add own group to post model */
+		addExternalGroup() {
 			if (groupPicked) {
 				// copy current sharing
 				const groupsToSave: GroupConfigType[] = [...postData.sharing_groups];

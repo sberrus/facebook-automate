@@ -16,12 +16,12 @@ const GroupsPicker = () => {
 	const jobs = useJobs();
 	// methods
 	const handleAddGroup = () => {
-		jobs?.addGroup();
+		jobs?.addOwnGroup();
 	};
 	return (
 		<div className="group-picker">
 			<Button onClick={jobs?.groupModal.openModal} className="button">
-				Add new Group <i className="bi bi-people"></i>
+				Add new group schedule <i className="bi bi-people"></i>
 			</Button>
 
 			<Modal

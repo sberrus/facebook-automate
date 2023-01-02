@@ -14,6 +14,7 @@ export interface GroupType {
 
 // sharing groups model
 export interface GroupConfigType {
+	owner: boolean;
 	group: GroupType;
 	schedule: ScheduleConfigType;
 }

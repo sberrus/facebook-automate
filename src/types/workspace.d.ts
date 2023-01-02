@@ -1,7 +1,7 @@
 /**  WORKSPACE TYPES */
 export interface WorkspaceType {
 	facebook_admin: string;
-	linked_groups: GroupType[];
+	linked_groups: OwnGroupType[];
 	linked_pages: PageType[];
 	managers: string[];
 }
@@ -14,11 +14,11 @@ export interface PageResType {
 
 export interface GroupResType {
 	ok: boolean;
-	groups: GroupType[];
+	groups: OwnGroupType[];
 }
 
-// Group data type
-export interface GroupType {
+// Own group data type
+export interface OwnGroupType {
 	name: string;
 	id: string;
 	picture: {
@@ -85,7 +85,7 @@ export interface PostPublishedType {
 	permalink_url: string;
 }
 
-interface PostScopeGroupJobType extends GroupType {
+interface PostScopeGroupJobType extends OwnGroupType {
 	job_id: string;
 	schedule: ScheduleConfigType;
 }

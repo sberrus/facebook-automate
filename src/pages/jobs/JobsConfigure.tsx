@@ -10,6 +10,10 @@ import style from "./jobsconfigure.module.scss";
 import PostLayer from "./layout/PostLayer";
 import ScheduleLayer from "./layout/ScheduleLayer";
 
+/**
+ * TODO: Incorporar manejo de errores para mostra pop-ups o lo uqe sea
+ */
+
 const JobConfigure = () => {
 	// hooks
 	const jobs = useJobs();
