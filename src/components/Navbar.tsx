@@ -19,7 +19,9 @@ const MainNavbar = () => {
 	const showToken = async () => {
 		const token = await _auth.currentUser?.getIdToken();
 
-		navigator.clipboard.writeText(token);
+		if (navigator.clipboard && token) {
+			navigator.clipboard.writeText(token);
+		}
 	};
 
 	return (
