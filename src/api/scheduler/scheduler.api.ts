@@ -11,7 +11,6 @@ import { config } from "../config";
 export const createNewJob = async (data: PostDataType) => {
 	// get user token
 	const firebaseUserToken = await auth.currentUser?.getIdToken();
-	console.log(data);
 	if (firebaseUserToken) {
 		try {
 			const res = await fetch(`${config.apiUrl}/api/schedule/`, {
@@ -46,7 +45,6 @@ export const getWorkspaceJobs = async () => {
 			});
 
 			const jobs = await res.json();
-
 			return jobs as PostScopeType[];
 		} catch (error) {
 			console.log("🚀 ~ file: scheduler.api.ts:9 ~ initNewJob ~ error", error);

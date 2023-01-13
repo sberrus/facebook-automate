@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getWorkspaceJobs } from "../../api/scheduler/scheduler.api";
+import UseAuth from "../../context/auth/UseAuth";
 import { PostScopeType } from "../../types/workspace";
 import Job from "./components/Job";
 // styles
@@ -13,14 +14,15 @@ import style from "./dashboard.module.scss";
  */
 //
 const Dashboard = () => {
-	const [jobs, setJobs] = useState<PostScopeType[]>([]);
+	// hooks
+	const auth = UseAuth();
+	// states
+	const [jobs, setJobs] = useState<PostScopeType[] | undefined>();
 
 	const handleJobs = async () => {
 		try {
-			const jobs = await getWorkspaceJobs();
-			if (jobs) {
-				setJobs(jobs);
-			}
+			const _jobs = await getWorkspaceJobs();
+			setJobs(_jobs);
 		} catch (error) {
 			console.log("🚀 ~ file: Dashboard.tsx:21 ~ handleJobs ~ error", error);
 		}
@@ -28,9 +30,11 @@ const Dashboard = () => {
 
 	//
 	useEffect(() => {
-		handleJobs();
+		if (!jobs) {
+			handleJobs();
+		}
 		return () => {};
-	}, []);
+	}, [auth?.user]);
 
 	return (
 		<div className={style.dashboard}>
@@ -39,14 +43,20 @@ const Dashboard = () => {
 					NEW POST
 				</Link>
 				<div className={style.postsContainer}>
-					{jobs.length > 0 ? (
+					{jobs ? (
 						<>
-							{jobs.map((job) => (
-								<Job job={job} key={job.page_post_job?.job_id} />
-							))}
+							{jobs.length > 0 ? (
+								<>
+									{jobs.map((job) => (
+										<Job job={job} key={job.page_post_job?.job_id} />
+									))}
+								</>
+							) : (
+								<>No Jobs programmed</>
+							)}
 						</>
 					) : (
-						<></>
+						<>Loading programmed jobs...</>
 					)}
 				</div>
 			</Container>

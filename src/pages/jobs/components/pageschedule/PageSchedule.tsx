@@ -25,7 +25,7 @@ const PageSchedule = () => {
 	const handleChangeDate = (e: ChangeEvent<HTMLSelectElement>) => {
 		SetPostScheduleData({ ...postScheduleData, date: e.target.value });
 	};
-	const handleChangeMinute = (e: ChangeEvent<HTMLInputElement>) => {
+	const handleChangeMinute = (e: ChangeEvent<HTMLSelectElement>) => {
 		SetPostScheduleData({ ...postScheduleData, minute: e.target.value });
 	};
 	const handleChangeHour = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -84,7 +84,7 @@ const PageSchedule = () => {
 				</Form.Group>
 				<Form.Group className="group time">
 					<Form.Label>Minutes:</Form.Label>
-					<Form.Select onChange={handleChangeHour}>
+					<Form.Select onChange={handleChangeMinute}>
 						<option value="00">00</option>
 						<option value="01">01</option>
 						<option value="02">02</option>
