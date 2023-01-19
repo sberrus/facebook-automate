@@ -1,5 +1,6 @@
 // imports
 import { createContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { createNewJob } from "../../../api/scheduler/scheduler.api";
 import { AssetsType } from "../../../types";
 import {
@@ -46,6 +47,8 @@ interface AuthContextType {
 export const JobsContext = createContext<AuthContextType | null>(null);
 
 const JobsProvider = ({ children }: JobsProviderProps) => {
+	// hooks
+	const navigate = useNavigate();
 	// schedule data
 	const [postData, setPostData] = useState<PostDataType>({
 		title: "",
@@ -198,6 +201,9 @@ const JobsProvider = ({ children }: JobsProviderProps) => {
 		async sendJob() {
 			try {
 				const res = await createNewJob(postData);
+				if (res.ok) {
+					navigate("/app/dashboard");
+				}
 			} catch (error) {
 				console.log("🚀 ~ file: JobsProvider.tsx:171 ~ sendJob ~ error", error);
 				alert("Error creating new Post Job");

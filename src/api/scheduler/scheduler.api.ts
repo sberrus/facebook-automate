@@ -22,7 +22,7 @@ export const createNewJob = async (data: PostDataType) => {
 				body: JSON.stringify(data),
 			});
 
-			console.log(await res.json());
+			return await res.json();
 		} catch (error) {
 			console.log("🚀 ~ file: scheduler.api.ts:9 ~ initNewJob ~ error", error);
 			throw error;

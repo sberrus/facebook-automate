@@ -1,6 +1,7 @@
 // imports
 import { useEffect, useState } from "react";
 import { Container, Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { auth } from "../../app/firebase";
 import UseAuth from "../../context/auth/UseAuth";
 import { PageType } from "../../types";
@@ -63,21 +64,23 @@ const JobConfigure = () => {
 					</Container>
 				</div>
 				<Container className="h-100">
-					<h5>Page</h5>
-					<Form.Select onChange={handlePageIDChange} required>
-						<option>Pick a page</option>
-						{pages.length > 0 ? (
-							<>
+					<h5>Page Picker</h5>
+					{pages.length > 0 ? (
+						<>
+							<Form.Select onChange={handlePageIDChange} required>
+								<option>Pick a page</option>
 								{pages.map((page) => (
 									<option value={page.id} key={page.id}>
 										{page.name}
 									</option>
 								))}
-							</>
-						) : (
-							<></>
-						)}
-					</Form.Select>
+							</Form.Select>
+						</>
+					) : (
+						<>
+							No pages picked. Pick pages in <Link to="/app/account">account page</Link>
+						</>
+					)}
 					<div className={style.layout}>
 						{/* post layer */}
 						<PostLayer />
