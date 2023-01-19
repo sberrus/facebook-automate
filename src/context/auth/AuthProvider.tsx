@@ -4,7 +4,7 @@ import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 // Login helpers
 import { firebaseSignIn, firebaseSignInWithFacebook } from "../../helpers/AuthHelper";
-import { getWorkspace } from "../../api/workspace/workspace.api";
+import { checkWorkspace, registerNewWorkspaceAndUser } from "../../api/workspace/workspace.api";
 // types
 import { LoginProps, WorkspaceType } from "../../types";
 type AuthProviderProps = {
@@ -37,17 +37,31 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
 	useEffect(() => {
 		// check current session
-		onAuthStateChanged(auth, async (user) => {
-			if (!!user) {
-				setUser(user);
-				localStorage.setItem("credentials", JSON.stringify(user));
-				// get workspace
-				const workspaceRes = await getWorkspace();
-				if (workspaceRes) {
-					setWorkspace(workspaceRes);
+		onAuthStateChanged(auth, async (_user) => {
+			try {
+				if (_user) {
+					setUser(_user);
+					localStorage.setItem("credentials", JSON.stringify(_user));
+					// get workspace
+					if (!workspace) {
+						// check workspace
+						const workspaceRes = await checkWorkspace();
+						setWorkspace(workspaceRes);
+
+						// no workspace registered
+						if (!workspaceRes) {
+							const registerResponse = await registerNewWorkspaceAndUser();
+							if (registerResponse.ok) {
+								const workspaceRes = await checkWorkspace();
+								setWorkspace(workspaceRes);
+							}
+						}
+					}
+				} else {
+					setUser(null);
 				}
-			} else {
-				setUser(null);
+			} catch (error) {
+				console.log(error);
 			}
 		});
 

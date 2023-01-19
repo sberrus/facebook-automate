@@ -9,11 +9,13 @@ export const getLongLivedTokenStatus = async (): Promise<boolean | undefined> =>
 	try {
 		// get firebase token
 		const firebaseAuthToken = await auth.currentUser?.getIdToken();
+
 		// check if token is received
 		if (firebaseAuthToken) {
 			const res = await fetch(`${config.apiUrl}/api/token/token-status`, {
 				headers: { "x-auth-firebase": firebaseAuthToken },
 			});
+
 			// if not 200
 			if (res.status !== 200) {
 				return false;
@@ -46,7 +48,7 @@ export const generateLongLivedToken = async (accessToken: string) => {
 			});
 			const tokenStatusResponse = await res.json();
 
-			return tokenStatusResponse.token_status;
+			return tokenStatusResponse;
 		}
 	} catch (error) {
 		throw error;

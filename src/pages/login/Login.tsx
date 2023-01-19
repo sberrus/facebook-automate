@@ -7,6 +7,12 @@ import UseAuth from "../../context/auth/UseAuth";
 import style from "./login.module.scss";
 import { useState } from "react";
 
+/**
+ * TODO: FIRST IN LOGIN WHEN LOGIN CHECK IF USER IS REGISTERED, IF NOT, DISPLAY A REGISTER CONFIRMATION BEFORE LOGIN AND ACCESS
+ * APP.
+ *
+ * WHEN REGISTER CONFIRMATION, CREATE REGISTER IN USER COLLECTION AND WORKSPACE COLLECTION
+ */
 //
 const Login = () => {
 	// context

@@ -11,12 +11,13 @@ import style from "./account.module.scss";
 import AddPageModal from "./components/AddPageModal";
 import { PageType } from "../../types";
 import { deletePage } from "../../api/workspace/workspace.api";
+import { auth } from "../../app/firebase";
 // types
 type TokenStatusType = "ok" | "error" | "loading" | "server-error";
 //
 const Account = () => {
 	// hooks
-	const auth = UseAuth();
+	const _auth = UseAuth();
 	// states
 	const [tokenStatus, setTokenStatus] = useState<TokenStatusType>("loading");
 
@@ -27,15 +28,14 @@ const Account = () => {
 		try {
 			// get token status
 			const isValidToken = await getLongLivedTokenStatus();
-			if (isValidToken) {
-				return setTokenStatus("ok");
-			}
 
+			// Error fetching the token
 			if (!isValidToken) {
 				return setTokenStatus("error");
 			}
 
-			setTokenStatus("server-error");
+			// set status ok
+			return setTokenStatus("ok");
 		} catch (error) {
 			console.log(error);
 			setTokenStatus("server-error");
@@ -48,7 +48,10 @@ const Account = () => {
 	const handleGenerateLongLivedToken = async (response: any) => {
 		const { accessToken } = response;
 		try {
-			await generateLongLivedToken(accessToken);
+			const res = await generateLongLivedToken(accessToken);
+			if (res.ok) {
+				setTokenStatus("ok");
+			}
 		} catch (error) {
 			console.log("🚀 ~ file: Account.tsx:38 ~ handleGenerateLongLivedToken ~ error", error);
 		}
@@ -72,10 +75,12 @@ const Account = () => {
 	};
 
 	useEffect(() => {
-		handleTokenStatus();
+		if (auth.currentUser) {
+			handleTokenStatus();
+		}
 
 		return () => {};
-	}, [handleTokenStatus]);
+	}, [auth.currentUser]);
 
 	return (
 		<div className={style.account}>
@@ -83,11 +88,10 @@ const Account = () => {
 				{/* current user data */}
 				<section className={style.sessionData}>
 					<h5 className={style.sectionTitle}>
-						Current User: <span className={style.currentSession}>{auth?.user?.email}</span>
+						Current User: <span className={style.currentSession}>{_auth?.user?.email}</span>
 					</h5>
 					<h5 className={style.sectionTitle}>
-						Facebook admin account:{" "}
-						<span className={style.currentSession}>{auth?.workspace?.facebook_admin}</span>
+						Facebook Account: <span className={style.currentSession}>{_auth?.workspace?.facebook_admin}</span>
 					</h5>
 				</section>
 				{/* token status */}
@@ -104,7 +108,7 @@ const Account = () => {
 						{tokenStatus === "error" && (
 							<span className={style.statusDanger}>
 								<span className={style.dotStatus}></span>
-								Token error, please generate a new token
+								Token error or not found, please generate a new token
 							</span>
 						)}
 
@@ -121,32 +125,35 @@ const Account = () => {
 						)}
 					</div>
 				</section>
-				{/* current user actions */}
-				<section className={style.actionsButtons}>
-					{auth?.user?.providerData[0].providerId === "facebook.com" && (
-						<>
-							<FacebookLogin
-								appId="929198114717885"
-								callback={handleGenerateLongLivedToken}
-								fields="email"
-								render={(renderProps) => (
-									<Button className={style.action} onClick={renderProps.onClick}>
-										Generate new token
-									</Button>
-								)}
-							/>
-						</>
-					)}
-				</section>
+				{/* current generate new token button */}
+				{(tokenStatus === "error" || tokenStatus === "server-error") && (
+					<section className={style.actionsButtons}>
+						{_auth?.user?.providerData[0].providerId === "facebook.com" && (
+							<>
+								<FacebookLogin
+									appId="929198114717885"
+									callback={handleGenerateLongLivedToken}
+									fields="email"
+									render={(renderProps) => (
+										<Button className={style.action} onClick={renderProps.onClick}>
+											Generate new token
+										</Button>
+									)}
+								/>
+							</>
+						)}
+					</section>
+				)}
+
 				{/* accounts linked to user */}
 				<section className={style.linkedAccounts}>
 					<h4>Pages Linked</h4>
 
-					{auth?.workspace?.linked_pages && (
+					{_auth?.workspace?.linked_pages && (
 						<>
-							{auth?.workspace?.linked_pages.length > 0 ? (
+							{_auth?.workspace?.linked_pages.length > 0 ? (
 								<>
-									{auth?.workspace?.linked_pages.map((page) => (
+									{_auth?.workspace?.linked_pages.map((page) => (
 										<div className={style.fbAccount} key={page.id}>
 											<div className={style.logo}>
 												<img src={page.picture.data.url} alt={`${page.name} picture`} />

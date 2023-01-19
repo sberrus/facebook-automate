@@ -6,11 +6,11 @@ import { config } from "../config";
 /**
  * Get the user workspace or null if not found
  */
-export const getWorkspace = async (): Promise<WorkspaceType | null> => {
+export const checkWorkspace = async (): Promise<WorkspaceType | null> => {
 	try {
 		const firebaseAuthToken = await auth.currentUser?.getIdToken();
-		// get workspace
 
+		// get workspace
 		if (firebaseAuthToken) {
 			const res = await fetch(`${config.apiUrl}/api/workspace`, {
 				headers: {
@@ -31,6 +31,34 @@ export const getWorkspace = async (): Promise<WorkspaceType | null> => {
 		return null;
 	}
 	return null;
+};
+
+export const registerNewWorkspaceAndUser = async () => {
+	try {
+		const firebaseAuthToken = await auth.currentUser?.getIdToken();
+
+		// get workspace
+		if (firebaseAuthToken) {
+			const res = await fetch(`${config.apiUrl}/api/workspace`, {
+				method: "POST",
+				headers: {
+					"content-type": "application/json",
+					"x-auth-firebase": firebaseAuthToken,
+				},
+			});
+
+			if (res.status !== 200) {
+				return null;
+			}
+
+			const workspaceRes = await res.json();
+
+			return workspaceRes;
+		}
+	} catch (error) {
+		// user not found
+		return null;
+	}
 };
 
 /**

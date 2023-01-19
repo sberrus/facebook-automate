@@ -43,6 +43,7 @@ const AddPageModal = () => {
 		try {
 			// get admin pages
 			const pages = await getAdminPages();
+
 			const linkedPages = auth?.workspace?.linked_pages;
 			let workspacePagesIds: string[] = [];
 
@@ -108,7 +109,10 @@ const AddPageModal = () => {
 								</>
 							) : (
 								// https://www.pluralsight.com/guides/how-to-use-radio-buttons-in-reactjs
-								<h5>No pages to add!</h5>
+								<>
+									<h5>No pages to add!</h5>
+									<p>please check if token is valid in account page</p>
+								</>
 							)}
 						</form>
 					</section>
